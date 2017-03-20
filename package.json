@@ -1,0 +1,56 @@
+{
+  "name": "meshblu-connector-powermate",
+  "version": "1.0.0",
+  "description": "Meshblu Connector ",
+  "homepage": "https://github.com/octoblu/meshblu-connector-powermate",
+  "bugs": "https://github.com/octoblu/meshblu-connector-powermate/issues",
+  "author": {
+    "name": "Octoblu",
+    "url": "https://github.com/octoblu"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octoblu/meshblu-connector-powermate.git"
+  },
+  "scripts": {
+    "start": "meshblu-connector-runner",
+    "test": "mocha",
+    "generate:package": "meshblu-connector-packager",
+    "generate:schema": "meshblu-connector-schema-generator > schemas.json"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coffee-coverage": "^2.0.1",
+    "mocha": "^3.2.0",
+    "segfault-handler": "^1.0.0",
+    "sinon": "^2.0.0",
+    "sinon-chai": "^2.8.0"
+  },
+  "dependencies": {
+    "coffee-script": "^1.12.4",
+    "debug": "^2.6.3",
+    "fs-cson": "^0.3.2",
+    "lodash": "^4.17.4",
+    "meshblu-config": "^7.0.0",
+    "meshblu-connector-runner": "^10.5.3",
+    "meshblu-connector-schema-generator": "^2.1.0",
+    "node-powermate": "0.0.5"
+  },
+  "meshbluConnector": {
+    "githubSlug": "octoblu/meshblu-connector-powermate"
+  },
+  "platformDependencies": {
+    "darwin": [],
+    "win32": [],
+    "win64": [],
+    "linux": [],
+    "android": null,
+    "ios": null
+  },
+  "license": "MIT",
+  "keywords": [
+    "meshblu-connector",
+    "gateblu"
+  ]
+}
