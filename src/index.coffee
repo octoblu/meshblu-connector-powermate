@@ -16,8 +16,8 @@ class Connector extends EventEmitter
     data = {
       action: 'click'
       state
-      @device
     }
+    data.device = @device if state == 'down'
     @emit 'message', {devices: ['*'], data}
 
   _handleWheel: (delta) =>
