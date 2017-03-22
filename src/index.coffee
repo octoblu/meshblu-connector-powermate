@@ -15,7 +15,8 @@ class Connector extends EventEmitter
     debug 'Button Event: ', state
     data = {
       action: 'click'
-      state: state
+      state
+      @device
     }
     @emit 'message', {devices: ['*'], data}
 
@@ -41,8 +42,8 @@ class Connector extends EventEmitter
       return callback error if error?
       callback()
 
-  onConfig: (device={}) =>
-    { @options } = device
+  onConfig: (@device={}) =>
+    { @options } = @device
     debug 'on config', @options
     # @_setBrightness()
 
