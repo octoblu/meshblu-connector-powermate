@@ -14,16 +14,28 @@ describe 'Powermate', ->
       HID: sinon.stub().returns @hid
     }
 
-    @powermate = new Powermate { @HID }
+    @sut = new Powermate { @HID }
 
   it 'should be an eventemitter', ->
-    expect(@powermate.on).to.be.a 'function'
+    expect(@sut.on).to.be.a 'function'
 
   describe '->connect', ->
+    describe 'when called and it is already connected', ->
+      beforeEach (done) ->
+        @sut.device = {exists: true}
+        @sut.connect (@error) =>
+          done()
+
+      it 'should not have an error', ->
+        expect(@error).to.not.exist
+
+      it 'should not get all of the devices', ->
+        expect(@HID.devices).to.not.have.been.calledWith 1917, 1040
+
     describe 'when there are no devices', ->
       beforeEach (done) ->
         @HID.devices.returns []
-        @powermate.connect (@error) =>
+        @sut.connect (@error) =>
           done()
 
       it 'should it have the correct error', ->
@@ -37,7 +49,7 @@ describe 'Powermate', ->
     describe 'when there is more than one device', ->
       beforeEach (done) ->
         @HID.devices.returns [{}, {}]
-        @powermate.connect (@error) =>
+        @sut.connect (@error) =>
           done()
 
       it 'should it have the correct error', ->
@@ -54,7 +66,7 @@ describe 'Powermate', ->
           path: 'some-unique-path'
         }
         @HID.devices.returns [@device]
-        @powermate.connect (@error) =>
+        @sut.connect (@error) =>
           done()
 
       it 'should not have an error', ->
@@ -76,10 +88,10 @@ describe 'Powermate', ->
     describe 'when called with a button click', ->
       beforeEach (done) ->
         @clicked = false
-        @powermate.on 'clicked', =>
+        @sut.on 'clicked', =>
           @clicked = true
           done()
-        @powermate._onRead [1]
+        @sut._onRead [1]
 
       it 'should emit the clicked', ->
         expect(@clicked).to.be.true
@@ -88,10 +100,10 @@ describe 'Powermate', ->
       beforeEach (done) ->
         done = _.once done
         @clicked = false
-        @powermate.on 'clicked', =>
+        @sut.on 'clicked', =>
           @clicked = true
           done()
-        @powermate._onRead [0]
+        @sut._onRead [0]
         _.delay done, 1000
 
       it 'should not emit the clicked', ->
@@ -100,8 +112,8 @@ describe 'Powermate', ->
   describe '->_onError', ->
     describe 'when called with an error', ->
       beforeEach (done) ->
-        @powermate.on 'error', (@error) => done()
-        @powermate._onError new Error 'Oh no'
+        @sut.on 'error', (@error) => done()
+        @sut._onError new Error 'Oh no'
 
       it 'should emit the error', ->
         expect(@error).to.exist
@@ -110,9 +122,24 @@ describe 'Powermate', ->
     describe 'when called without an error', ->
       beforeEach (done) ->
         done = _.once done
-        @powermate.on 'error', (@error) => done()
-        @powermate._onError null
+        @sut.on 'error', (@error) => done()
+        @sut._onError null
         _.delay done, 1000
 
       it 'should not emit the error', ->
         expect(@error).to.not.exist
+
+  describe '->isConnected', ->
+    describe 'when connected', ->
+      beforeEach ->
+        @sut.device = { exists: true }
+
+      it 'should return true', ->
+        expect(@sut.isConnected()).to.be.true
+
+    describe 'when not connected', ->
+      beforeEach ->
+        @sut.device = null
+
+      it 'should return false', ->
+        expect(@sut.isConnected()).to.be.false

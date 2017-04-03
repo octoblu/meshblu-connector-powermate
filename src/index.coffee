@@ -1,13 +1,14 @@
-_               = require 'lodash'
+# _               = require 'lodash'
 {EventEmitter}  = require 'events'
-PowerMate       = require 'node-powermate'
+Powermate       = require '../src/powermate'
 debug           = require('debug')('meshblu-connector-powermate:index')
 
 class Connector extends EventEmitter
-  constructor: ->
+  constructor: ({ @powermate } = {}) ->
+    @powermate ?= new Powermate
 
   isOnline: (callback) =>
-    callback null, running: true
+    callback null, running: @powermate.isConnected()
 
   close: (callback) =>
     debug 'on close'
@@ -19,6 +20,6 @@ class Connector extends EventEmitter
 
   start: (@device, callback) =>
     debug 'started'
-    callback()
+    @powermate.connect callback
 
 module.exports = Connector

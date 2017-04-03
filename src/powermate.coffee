@@ -6,6 +6,7 @@ class Powermate extends EventEmitter
     @HID ?= require 'node-hid'
 
   connect: (callback) =>
+    return callback null if @device?
     devices = @HID.devices(1917, 1040)
     if _.isEmpty devices
       return callback @_createError 404, 'Powermate device not found'
@@ -20,6 +21,10 @@ class Powermate extends EventEmitter
   close: (callback) =>
     return callback null unless @device?
     @device.close()
+    @device = null
+
+  isConnected: =>
+    return @device?
 
   _onRead: (data) =>
     [clicked] = data
