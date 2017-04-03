@@ -84,6 +84,7 @@ describe 'Powermate', ->
   describe '->_emitClicked', ->
     describe 'when called with a button click', ->
       beforeEach (done) ->
+        @sut.device = { exists: true }
         @clicked = false
         @sut.on 'clicked', =>
           @clicked = true
@@ -95,6 +96,21 @@ describe 'Powermate', ->
 
     describe 'when called with a button up', ->
       beforeEach (done) ->
+        @sut.device = { exists: true }
+        done = _.once done
+        @clicked = false
+        @sut.on 'clicked', =>
+          @clicked = true
+          done()
+        @sut._emitClicked [0]
+        _.delay done, 1000
+
+      it 'should not emit the clicked', ->
+        expect(@clicked).to.be.false
+
+    describe 'when called without a device', ->
+      beforeEach (done) ->
+        @sut.device = null
         done = _.once done
         @clicked = false
         @sut.on 'clicked', =>
@@ -109,6 +125,7 @@ describe 'Powermate', ->
   describe '->_emitError', ->
     describe 'when called with an error', ->
       beforeEach (done) ->
+        @sut.device = { exists: true }
         @sut.on 'error', (@error) => done()
         @sut._emitError new Error 'Oh no'
 
@@ -118,6 +135,18 @@ describe 'Powermate', ->
 
     describe 'when called without an error', ->
       beforeEach (done) ->
+        @sut.device = { exists: true }
+        done = _.once done
+        @sut.on 'error', (@error) => done()
+        @sut._emitError null
+        _.delay done, 1000
+
+      it 'should not emit the error', ->
+        expect(@error).to.not.exist
+
+    describe 'when called without a device', ->
+      beforeEach (done) ->
+        @sut.device = null
         done = _.once done
         @sut.on 'error', (@error) => done()
         @sut._emitError null

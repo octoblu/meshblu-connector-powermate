@@ -9,7 +9,14 @@ describe 'Connector', ->
       connect: sinon.stub()
       close: sinon.spy()
       isConnected: sinon.stub()
+      on: sinon.stub()
     @sut = new Connector { @powermate, interval: 10 }
+
+  it 'should listen on powermate error', ->
+    expect(@powermate.on).to.have.been.calledWith 'error'
+
+  it 'should listen on powermate clicked', ->
+    expect(@powermate.on).to.have.been.calledWith 'clicked'
 
   describe '->start', ->
     beforeEach (done) ->

@@ -36,8 +36,8 @@ class Powermate extends EventEmitter
   _emitClicked: (data) =>
     return unless @device?
     [clicked] = data
-    debug('emit read', { clicked })
     return unless clicked
+    debug 'clicked'
     @emit 'clicked'
 
   _emitError: (error) =>
