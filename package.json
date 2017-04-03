@@ -17,12 +17,18 @@
     "start": "meshblu-connector-runner",
     "test": "mocha",
     "generate:package": "meshblu-connector-packager",
-    "generate:schema": "meshblu-connector-schema-generator > schemas.json"
+    "generate:schema": "meshblu-connector-schema-generator > schemas.json",
+    "coverage": "nyc npm test",
+    "mocha:json": "env NPM_ENV=test mocha --reporter json > coverage/mocha.json",
+    "test:watch": "mocha -w -R mocha-multi --reporter-options spec=-,mocha-osx-reporter=-"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "coffee-coverage": "^2.0.1",
     "mocha": "^3.2.0",
+    "mocha-multi": "^0.10.0",
+    "mocha-osx-reporter": "^0.1.2",
+    "nyc": "^10.1.2",
     "segfault-handler": "^1.0.0",
     "sinon": "^2.0.0",
     "sinon-chai": "^2.8.0"
@@ -35,7 +41,7 @@
     "meshblu-config": "^7.0.0",
     "meshblu-connector-runner": "^10.5.3",
     "meshblu-connector-schema-generator": "^2.1.0",
-    "node-powermate": "git+https://github.com/virgilvox/node-powermate"
+    "node-hid": "^0.5.4"
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-powermate"
@@ -52,5 +58,16 @@
   "keywords": [
     "meshblu-connector",
     "gateblu"
-  ]
+  ],
+  "nyc": {
+    "cache": true,
+    "reporter": [
+      "text-summary",
+      "lcov",
+      "json"
+    ],
+    "extension": [
+      ".coffee"
+    ]
+  }
 }
