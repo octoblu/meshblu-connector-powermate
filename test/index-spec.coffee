@@ -1,4 +1,5 @@
 {describe,beforeEach,it,expect} = global
+_         = require 'lodash'
 sinon     = require 'sinon'
 Connector = require '../'
 
@@ -6,20 +7,30 @@ describe 'Connector', ->
   beforeEach ->
     @powermate =
       connect: sinon.stub()
+      close: sinon.spy()
       isConnected: sinon.stub()
-    @sut = new Connector { @powermate }
+    @sut = new Connector { @powermate, interval: 10 }
 
   describe '->start', ->
     beforeEach (done) ->
+      @sut.die = sinon.stub()
       @powermate.connect.yields null
       @sut.start { uuid: true }, (@error) =>
-        done()
+        @sut.close (error) =>
+          return done error if error?
+          _.delay done, 100
 
     it 'should start without an error', ->
       expect(@error).to.not.exist
 
     it 'should call powermate connect', ->
       expect(@powermate.connect).to.have.been.called
+
+    it 'should call ->die', ->
+      expect(@sut.die).to.have.been.called
+
+    it 'should be closed', ->
+      expect(@sut.closed).to.be.true
 
   describe '->onConfig', ->
     describe 'when called with an object', ->
@@ -58,3 +69,13 @@ describe 'Connector', ->
 
       it 'should have running true', ->
         expect(@result.running).to.be.false
+
+  describe '->close', ->
+    beforeEach (done) ->
+      @sut.close done
+
+    it 'should call close on powermate', ->
+      expect(@powermate.close).to.have.been.called
+
+    it 'should set the closed property', ->
+      expect(@sut.closed).to.be.true

@@ -6,7 +6,7 @@ Powermate = require '../src/powermate'
 describe 'Powermate', ->
   beforeEach ->
     @hid = {
-      on: sinon.stub()
+      read: sinon.stub()
     }
 
     @HID = {
@@ -78,20 +78,17 @@ describe 'Powermate', ->
       it 'should construct HID with the path', ->
         expect(@HID.HID).to.have.been.calledWith 'some-unique-path'
 
-      it 'should call on with read', ->
-        expect(@hid.on).to.have.been.calledWith 'read'
+      it 'should call read', ->
+        expect(@hid.read).to.have.been.called
 
-      it 'should call on with error', ->
-        expect(@hid.on).to.have.been.calledWith 'error'
-
-  describe '->_onRead', ->
+  describe '->_emitClicked', ->
     describe 'when called with a button click', ->
       beforeEach (done) ->
         @clicked = false
         @sut.on 'clicked', =>
           @clicked = true
           done()
-        @sut._onRead [1]
+        @sut._emitClicked [1]
 
       it 'should emit the clicked', ->
         expect(@clicked).to.be.true
@@ -103,17 +100,17 @@ describe 'Powermate', ->
         @sut.on 'clicked', =>
           @clicked = true
           done()
-        @sut._onRead [0]
+        @sut._emitClicked [0]
         _.delay done, 1000
 
       it 'should not emit the clicked', ->
         expect(@clicked).to.be.false
 
-  describe '->_onError', ->
+  describe '->_emitError', ->
     describe 'when called with an error', ->
       beforeEach (done) ->
         @sut.on 'error', (@error) => done()
-        @sut._onError new Error 'Oh no'
+        @sut._emitError new Error 'Oh no'
 
       it 'should emit the error', ->
         expect(@error).to.exist
@@ -123,7 +120,7 @@ describe 'Powermate', ->
       beforeEach (done) ->
         done = _.once done
         @sut.on 'error', (@error) => done()
-        @sut._onError null
+        @sut._emitError null
         _.delay done, 1000
 
       it 'should not emit the error', ->

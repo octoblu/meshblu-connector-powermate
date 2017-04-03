@@ -1,8 +1,9 @@
 _              = require 'lodash'
 {EventEmitter} = require 'events'
+debug          = require('debug')('meshblu-connector-powermate:powermate')
 
 class Powermate extends EventEmitter
-  constructor: ({ @HID }) ->
+  constructor: ({ @HID }={}) ->
     @HID ?= require 'node-hid'
 
   connect: (callback) =>
@@ -14,8 +15,8 @@ class Powermate extends EventEmitter
       return callback @_createError 412, 'More than one Powermate device found'
     { path } = _.first(devices)
     @device = new @HID.HID path
-    @device.on 'read', @_onRead
-    @device.on 'error', @_onError
+    @device.read @_onRead
+    debug('done')
     callback()
 
   close: (callback) =>
@@ -26,12 +27,22 @@ class Powermate extends EventEmitter
   isConnected: =>
     return @device?
 
-  _onRead: (data) =>
+  _onRead: (error, data) =>
+    return @_emitError error if error?
+    @_emitClicked data
+    return unless @device?
+    @device.read @_onRead
+
+  _emitClicked: (data) =>
+    return unless @device?
     [clicked] = data
+    debug('emit read', { clicked })
     return unless clicked
     @emit 'clicked'
 
-  _onError: (error) =>
+  _emitError: (error) =>
+    return unless @device?
+    debug('on error', error)
     return unless error?
     @emit 'error', error
 
