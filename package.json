@@ -35,7 +35,7 @@
     "meshblu-config": "^7.0.0",
     "meshblu-connector-runner": "^10.5.3",
     "meshblu-connector-schema-generator": "^2.1.0",
-    "node-powermate": "git+https://github.com/virgilvox/node-powermate"
+    "node-powermate": "git+https://github.com/octoblu/node-powermate"
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-powermate"

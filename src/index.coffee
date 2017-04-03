@@ -5,11 +5,20 @@ _               = require 'lodash'
 
 class Connector extends EventEmitter
   constructor: ->
-    @powermate = new PowerMate
+    @_initialize()
+
+  _initialize: ->
+    try
+      @powermate = new PowerMate
+    catch error
+      @emit 'error', error
+      return
+
     @powermate.on 'buttonDown', () => @_handleButtonEvent 'down'
     @powermate.on 'buttonUp', () => @_handleButtonEvent 'up'
     # @powermate.on 'wheelTurn', @_handleWheel
     @powermate.on 'disconnected', @_disconnected
+
 
   _handleButtonEvent: (state) =>
     debug 'Button Event: ', state
@@ -24,23 +33,20 @@ class Connector extends EventEmitter
     debug 'Wheel Change', delta
 
 
-  _setBrightness: () =>
-    brightness = _.get @options, 'brightness', 255
-    @powermate.setBrightness brightness, (error) =>
-      @emit 'error', error if error?
+  # _setBrightness: () =>
+  #   brightness = _.get @options, 'brightness', 255
+  #   @powermate.setBrightness brightness, (error) =>
+  #     @emit 'error', error if error?
 
   _disconnected: () =>
-    @debug 'Disconnected'
-    @emit 'message', {devices: ["*"], message: 'disconnected'}
+    debug 'Disconnected'
+    @_initialize()
 
   isOnline: (callback) =>
     callback null, running: true
 
   close: (callback) =>
     debug 'on close'
-    @powermate.close (error) =>
-      return callback error if error?
-      callback()
 
   onConfig: (@device={}) =>
     { @options } = @device
