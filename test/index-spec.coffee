@@ -132,7 +132,7 @@ describe 'Connector', ->
         expect(@error.message).to.equal 'oh-no'
 
   describe '->_onClicked', ->
-    describe 'when called', ->
+    describe 'when called with a device on the sut', ->
       beforeEach (done) ->
         @sut.device = { uuid: 'should-be-this' }
         @sut.on 'message', (@message) => done()
@@ -145,3 +145,14 @@ describe 'Connector', ->
             device: { uuid: 'should-be-this' }
             action: 'click'
         }
+
+    describe 'when called without a device on the sut', ->
+      beforeEach (done) ->
+        done = _.once done
+        @sut.device = null
+        @sut.on 'message', (@message) => done()
+        @sut._onClicked()
+        _.delay done, 500
+
+      it 'should not emit a message', ->
+        expect(@message).to.not.exist

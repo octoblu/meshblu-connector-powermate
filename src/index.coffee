@@ -46,6 +46,7 @@ class Connector extends EventEmitter
     @emit 'error', error
 
   _onClicked: =>
+    return debug 'clicked but no device on scope' if _.isEmpty @device
     debug 'emitting clicked message'
     @emit 'message', {
       devices: ['*']
