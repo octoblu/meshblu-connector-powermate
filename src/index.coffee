@@ -11,14 +11,19 @@ class Connector extends EventEmitter
     @powermate.on 'error', @_onError
     @powermate.on 'clicked', @_onClicked
 
-  isOnline: (callback) =>
-    callback null, running: @powermate.isConnected()
-
   close: (callback) =>
     debug 'on close'
     @powermate.close()
     @closed = true
     callback()
+
+  die: (error) =>
+    return process.exit(0) unless error?
+    console.error('Powermate Connector Error', error)
+    process.exit(1)
+
+  isOnline: (callback) =>
+    callback null, running: @powermate.isConnected()
 
   onConfig: (@device={}, callback=->) =>
     callback null
@@ -28,14 +33,17 @@ class Connector extends EventEmitter
     async.doUntil @_connectAndDelay, @_isClosed, @die
     callback()
 
-  die: (error) =>
-    return process.exit(0) unless error?
-    console.error('Powermate Connector Error', error)
-    process.exit(1)
+  _connectAndDelay: (callback) =>
+    @powermate.connect (error) =>
+      @_onError error if error?
+      _.delay callback, @interval
+
+  _isClosed: =>
+    return @closed == true
 
   _onError: (error) =>
+    debug 'on error', error?.toString() ? error
     @emit 'error', error
-    @close() if error.message == 'could not read from HID device'
 
   _onClicked: =>
     debug 'emitting clicked'
@@ -46,13 +54,5 @@ class Connector extends EventEmitter
         @device
       }
     }
-
-  _isClosed: =>
-    return @closed == true
-
-  _connectAndDelay: (callback) =>
-    @powermate.connect (error) =>
-      return callback error if error?
-      _.delay callback, @interval
 
 module.exports = Connector

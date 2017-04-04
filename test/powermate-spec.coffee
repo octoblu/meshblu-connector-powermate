@@ -125,13 +125,18 @@ describe 'Powermate', ->
   describe '->_emitError', ->
     describe 'when called with an error', ->
       beforeEach (done) ->
+        @sut.close = sinon.spy()
         @sut.device = { exists: true }
-        @sut.on 'error', (@error) => done()
+        @sut.on 'error', (@error) =>
+          _.delay done, 100
         @sut._emitError new Error 'Oh no'
 
       it 'should emit the error', ->
         expect(@error).to.exist
         expect(@error.message).to.equal 'Oh no'
+
+      it 'should call close', ->
+        expect(@sut.close).to.have.been.called
 
     describe 'when called without an error', ->
       beforeEach (done) ->
@@ -169,3 +174,28 @@ describe 'Powermate', ->
 
       it 'should return false', ->
         expect(@sut.isConnected()).to.be.false
+
+  describe '->close', ->
+    describe 'when called with a connected device', ->
+      beforeEach ->
+        @device = {
+          close: sinon.spy()
+          removeAllListeners: sinon.spy()
+        }
+        @sut.device = @device
+        @sut.close()
+
+      it 'should call device.close', ->
+        expect(@device.close).to.have.been.called
+
+      it 'should call device.removeAllListeners', ->
+        expect(@device.removeAllListeners).to.have.been.called
+
+      it 'should not be connected', ->
+        expect(@sut.isConnected()).to.be.false
+
+    describe 'when called without a device', ->
+      it 'should not throw an error', ->
+        expect( =>
+          @sut.close()
+        ).to.not.throw

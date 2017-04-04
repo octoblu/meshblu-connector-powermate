@@ -19,9 +19,10 @@ class Powermate extends EventEmitter
     debug('done')
     callback()
 
-  close: (callback) =>
-    return callback null unless @device?
+  close: =>
+    return unless @isConnected()
     @device.close()
+    @device.removeAllListeners()
     @device = null
 
   isConnected: =>
@@ -30,21 +31,22 @@ class Powermate extends EventEmitter
   _onRead: (error, data) =>
     return @_emitError error if error?
     @_emitClicked data
-    return unless @device?
+    return unless @isConnected()
     @device.read @_onRead
 
   _emitClicked: (data) =>
-    return unless @device?
+    return unless @isConnected()
     [clicked] = data
     return unless clicked
     debug 'clicked'
     @emit 'clicked'
 
   _emitError: (error) =>
-    return unless @device?
-    debug('on error', error)
+    return unless @isConnected()
     return unless error?
+    debug 'emit error', error
     @emit 'error', error
+    @close()
 
   _createError: (code, message) =>
     error = new Error message

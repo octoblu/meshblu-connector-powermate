@@ -19,25 +19,48 @@ describe 'Connector', ->
     expect(@powermate.on).to.have.been.calledWith 'clicked'
 
   describe '->start', ->
-    beforeEach (done) ->
-      @sut.die = sinon.stub()
-      @powermate.connect.yields null
-      @sut.start { uuid: true }, (@error) =>
-        @sut.close (error) =>
-          return done error if error?
-          _.delay done, 100
+    describe 'when it starts and closes', ->
+      beforeEach (done) ->
+        @sut.die = sinon.stub()
+        @powermate.connect.yields null
+        @sut.start { uuid: true }, (@error) =>
+          @sut.close (error) =>
+            return done error if error?
+            _.delay done, 100
 
-    it 'should start without an error', ->
-      expect(@error).to.not.exist
+      it 'should start without an error', ->
+        expect(@error).to.not.exist
 
-    it 'should call powermate connect', ->
-      expect(@powermate.connect).to.have.been.called
+      it 'should call powermate connect', ->
+        expect(@powermate.connect).to.have.been.called
 
-    it 'should call ->die', ->
-      expect(@sut.die).to.have.been.called
+      it 'should call ->die', ->
+        expect(@sut.die).to.have.been.called
 
-    it 'should be closed', ->
-      expect(@sut.closed).to.be.true
+      it 'should be closed', ->
+        expect(@sut.closed).to.be.true
+
+    describe 'when it starts and errors on connect', ->
+      beforeEach (done) ->
+        done = _.once done
+        @sut.die = sinon.stub()
+        @powermate.connect.yields new Error 'oh-no'
+        @sut.on 'error', (@error) => done()
+        @sut.start { uuid: true }, (@startError) =>
+          return done @startError if @startError?
+          _.delay done, 500
+
+      it 'should not return an error on start', ->
+        expect(@startError).to.not.exist
+
+      it 'should emit an error', ->
+        expect(@error).to.exist
+
+      it 'should call powermate connect', ->
+        expect(@powermate.connect).to.have.been.called
+
+      it 'should not call die', ->
+        expect(@sut.die).to.not.have.been.called
 
   describe '->onConfig', ->
     describe 'when called with an object', ->
@@ -45,6 +68,10 @@ describe 'Connector', ->
         expect(=>
           @sut.onConfig { uuid: true }
         ).to.not.throw
+
+      it 'should set the device on the sut', ->
+        @sut.onConfig { uuid: 'yeso' }
+        expect(@sut.device).to.deep.equal { uuid: 'yeso' }
 
     describe 'when called without an object', ->
       it 'should throw an error', ->
@@ -86,3 +113,35 @@ describe 'Connector', ->
 
     it 'should set the closed property', ->
       expect(@sut.closed).to.be.true
+
+  describe '->_onError', ->
+    describe 'when called without an error', ->
+      it 'should not throw an error', ->
+        expect(=>
+          @sut._onError null
+        ).to.not.throw
+
+    describe 'when called with an error', ->
+      beforeEach (done) ->
+        @sut.on 'error', (@error) =>
+          done()
+        @sut._onError new Error 'oh-no'
+
+      it 'should emit an error', ->
+        expect(@error).to.exist
+        expect(@error.message).to.equal 'oh-no'
+
+  describe '->_onClicked', ->
+    describe 'when called', ->
+      beforeEach (done) ->
+        @sut.device = { uuid: 'should-be-this' }
+        @sut.on 'message', (@message) => done()
+        @sut._onClicked()
+
+      it 'should emit a message', ->
+        expect(@message).to.deep.equal {
+          devices: ['*']
+          data:
+            device: { uuid: 'should-be-this' }
+            action: 'click'
+        }
