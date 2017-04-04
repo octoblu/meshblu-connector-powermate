@@ -35,6 +35,7 @@ class Connector extends EventEmitter
 
   _onError: (error) =>
     @emit 'error', error
+    @close() if error.message == 'could not read from HID device'
 
   _onClicked: =>
     debug 'emitting clicked'
