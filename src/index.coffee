@@ -12,7 +12,7 @@ class Connector extends EventEmitter
     @powermate.on 'clicked', @_onClicked
 
   close: (callback) =>
-    debug 'on close'
+    debug 'closing'
     @powermate.close()
     @closed = true
     callback()
@@ -46,7 +46,7 @@ class Connector extends EventEmitter
     @emit 'error', error
 
   _onClicked: =>
-    debug 'emitting clicked'
+    debug 'emitting clicked message'
     @emit 'message', {
       devices: ['*']
       data: {

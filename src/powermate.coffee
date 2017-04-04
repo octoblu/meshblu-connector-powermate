@@ -16,7 +16,7 @@ class Powermate extends EventEmitter
     { path } = _.first(devices)
     @device = new @HID.HID path
     @device.read @_onRead
-    debug('done')
+    debug 'connected to device', { path }
     callback()
 
   close: =>
