@@ -28,3 +28,4 @@ node_modules
 deploy
 meshblu.json
 schemas.json
+log
