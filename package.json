@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-powermate",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Meshblu Connector ",
   "homepage": "https://github.com/octoblu/meshblu-connector-powermate",
   "bugs": "https://github.com/octoblu/meshblu-connector-powermate/issues",
@@ -35,12 +35,12 @@
   },
   "dependencies": {
     "async": "^2.3.0",
-    "coffee-script": "^1.12.4",
+    "coffee-script": "^1.12.5",
     "debug": "^2.6.3",
     "fs-cson": "^0.3.2",
     "lodash": "^4.17.4",
     "meshblu-config": "^7.0.0",
-    "meshblu-connector-runner": "^10.5.4",
+    "meshblu-connector-runner": "^10.6.0",
     "meshblu-connector-schema-generator": "^2.1.0",
     "node-hid": "^0.5.4"
   },

@@ -362,9 +362,9 @@ coffee-coverage@^2.0.1:
     minimatch "^3.0.2"
     pkginfo ">=0.2.3"
 
-coffee-script@>=1.6.2, coffee-script@^1.10.0, coffee-script@^1.12.4, coffee-script@^1.9.2:
-  version "1.12.4"
-  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.12.4.tgz#fe1bced97fe1fb3927b998f2b45616e0658be1ff"
+coffee-script@>=1.6.2, coffee-script@^1.10.0, coffee-script@^1.12.4, coffee-script@^1.12.5, coffee-script@^1.9.2:
+  version "1.12.5"
+  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.12.5.tgz#809f4585419112bbfe46a073ad7543af18c27346"
 
 combined-stream@^1.0.5, combined-stream@~1.0.5:
   version "1.0.5"
@@ -1238,9 +1238,9 @@ meshblu-config@^7.0.0:
     lodash "^3.9.1"
     meshblu-encryption "^2.0.1"
 
-meshblu-connector-runner@^10.5.4:
-  version "10.5.4"
-  resolved "https://registry.yarnpkg.com/meshblu-connector-runner/-/meshblu-connector-runner-10.5.4.tgz#95f71eda3f1fb8a850d66e78e8195da09931bbff"
+meshblu-connector-runner@^10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/meshblu-connector-runner/-/meshblu-connector-runner-10.6.0.tgz#32ea19fb67e959214419e7d60c6854e8888b3eea"
   dependencies:
     async "^2.3.0"
     bunyan "^1.8.9"
