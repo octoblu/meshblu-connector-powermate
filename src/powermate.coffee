@@ -15,7 +15,11 @@ class Powermate extends EventEmitter
       return callback @_createError 412, 'More than one Powermate device found'
     { path } = _.first(devices)
     @device = new @HID.HID path
-    @device.read @_onRead
+    @_throttledOnData = _.throttle @_onData, 1000, leading: true, trailing: false
+    @device.on 'data', @_throttledOnData
+    @device.once 'error', (error) =>
+      @_emitError error
+      @close()
     debug 'connected to device', { path }
     callback()
 
@@ -28,11 +32,8 @@ class Powermate extends EventEmitter
   isConnected: =>
     return @device?
 
-  _onRead: (error, data) =>
-    return @_emitError error if error?
+  _onData: (data) =>
     @_emitClicked data
-    return unless @isConnected()
-    @device.read @_onRead
 
   _emitClicked: (data) =>
     return unless @isConnected()

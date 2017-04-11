@@ -2,13 +2,11 @@
 _         = require 'lodash'
 sinon     = require 'sinon'
 Powermate = require '../src/powermate'
+{EventEmitter} = require 'events'
 
 describe 'Powermate', ->
   beforeEach ->
-    @hid = {
-      read: sinon.stub()
-    }
-
+    @hid = new EventEmitter
     @HID = {
       devices: sinon.stub()
       HID: sinon.stub().returns @hid
@@ -62,9 +60,8 @@ describe 'Powermate', ->
 
     describe 'when there is a device', ->
       beforeEach (done) ->
-        @device = {
-          path: 'some-unique-path'
-        }
+        @device = new EventEmitter
+        @device.path = 'some-unique-path'
         @HID.devices.returns [@device]
         @sut.connect (@error) =>
           done()
@@ -77,9 +74,6 @@ describe 'Powermate', ->
 
       it 'should construct HID with the path', ->
         expect(@HID.HID).to.have.been.calledWith 'some-unique-path'
-
-      it 'should call read', ->
-        expect(@hid.read).to.have.been.called
 
   describe '->_emitClicked', ->
     describe 'when called with a button click', ->
