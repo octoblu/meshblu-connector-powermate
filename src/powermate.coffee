@@ -36,8 +36,7 @@ class Powermate extends EventEmitter
     debug 'data', data
     return unless @isConnected()
 
-    @_throttledEmitClicked() if data[0] || _.isEqual(@previousData, data)
-    @previousData = data
+    @_throttledEmitClicked() if data[0]
 
   _emitClicked: =>
     debug 'clicked'
