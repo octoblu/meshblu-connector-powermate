@@ -33,9 +33,7 @@ class Powermate extends EventEmitter
     return @device?
 
   _onData: (data) =>
-    debug 'data', data
-    return unless @isConnected()
-
+    debug '_onData', data
     @_throttledEmitClicked() if data[0]
 
   _emitClicked: =>
