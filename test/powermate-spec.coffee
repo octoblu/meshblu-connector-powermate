@@ -75,63 +75,6 @@ describe 'Powermate', ->
       it 'should construct HID with the path', ->
         expect(@HID.HID).to.have.been.calledWith 'some-unique-path'
 
-  describe '->_emitClicked', ->
-    describe 'when called with a button click', ->
-      beforeEach (done) ->
-        @sut.device = { exists: true }
-        @clicked = false
-        @sut.on 'clicked', =>
-          @clicked = true
-          done()
-        @sut._emitClicked [1]
-
-      it 'should emit the clicked', ->
-        expect(@clicked).to.be.true
-
-    describe 'when called with a button up', ->
-      beforeEach (done) ->
-        @sut.device = { exists: true }
-        done = _.once done
-        @clicked = false
-        @sut.on 'clicked', =>
-          @clicked = true
-          done()
-        @sut._emitClicked [0]
-        _.delay done, 1000
-
-      it 'should not emit the clicked', ->
-        expect(@clicked).to.be.false
-
-    describe 'when called without a device', ->
-      beforeEach (done) ->
-        @sut.device = null
-        done = _.once done
-        @clicked = false
-        @sut.on 'clicked', =>
-          @clicked = true
-          done()
-        @sut._emitClicked [0]
-        _.delay done, 1000
-
-      it 'should not emit the clicked', ->
-        expect(@clicked).to.be.false
-
-  describe '->_emitError', ->
-    describe 'when called with an error', ->
-      beforeEach (done) ->
-        @sut.close = sinon.spy()
-        @sut.device = { exists: true }
-        @sut.on 'error', (@error) =>
-          _.delay done, 100
-        @sut._emitError new Error 'Oh no'
-
-      it 'should emit the error', ->
-        expect(@error).to.exist
-        expect(@error.message).to.equal 'Oh no'
-
-      it 'should call close', ->
-        expect(@sut.close).to.have.been.called
-
     describe 'when called without an error', ->
       beforeEach (done) ->
         @sut.device = { exists: true }
@@ -193,3 +136,45 @@ describe 'Powermate', ->
         expect( =>
           @sut.close()
         ).to.not.throw
+
+  describe 'event: "data"', ->
+    beforeEach (done) ->
+      @HID.devices.returns [{path: '/path/to/powermate'}]
+      @sut.connect done
+
+    describe 'when a non button event is emitted', ->
+      beforeEach ->
+        @onClicked = sinon.spy()
+        @sut.on 'clicked', @onClicked
+        @hid.emit 'data', [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+
+      it 'should not emit a "clicked" event', (done) ->
+        _.delay =>
+          expect(@onClicked).not.to.have.been.called
+          done()
+        , 100
+
+    describe 'when a button event is emitted', ->
+      beforeEach ->
+        @onClicked = sinon.spy()
+        @sut.on 'clicked', @onClicked
+        @hid.emit 'data', [0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
+
+      it 'should emit a "clicked" event', (done) ->
+        _.delay =>
+          expect(@onClicked).to.have.been.called
+          done()
+        , 100
+
+    describe 'when a button event is emitted twice', ->
+      beforeEach ->
+        @onClicked = sinon.spy()
+        @sut.on 'clicked', @onClicked
+        @hid.emit 'data', [0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
+        @hid.emit 'data', [0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
+
+      it 'should emit only one "clicked" event', (done) ->
+        _.delay =>
+          expect(@onClicked).to.have.been.calledOnce
+          done()
+        , 100
