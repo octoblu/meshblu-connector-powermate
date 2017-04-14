@@ -146,7 +146,7 @@ describe 'Powermate', ->
       beforeEach ->
         @onClicked = sinon.spy()
         @sut.on 'clicked', @onClicked
-        @hid.emit 'data', [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+        @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
 
       it 'should not emit a "clicked" event', (done) ->
         _.delay =>
@@ -159,6 +159,18 @@ describe 'Powermate', ->
         @onClicked = sinon.spy()
         @sut.on 'clicked', @onClicked
         @hid.emit 'data', [0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
+
+      it 'should emit a "clicked" event', (done) ->
+        _.delay =>
+          expect(@onClicked).to.have.been.called
+          done()
+        , 100
+
+    describe 'when a defective button click event is emitted', ->
+      beforeEach ->
+        @onClicked = sinon.spy()
+        @sut.on 'clicked', @onClicked
+        @hid.emit 'data', [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
 
       it 'should emit a "clicked" event', (done) ->
         _.delay =>
