@@ -34,7 +34,7 @@ class Powermate extends EventEmitter
 
   _onData: (data) =>
     debug '_onData', data
-    @_throttledEmitClicked() if data[0]
+    @_throttledEmitClicked() if data[0] || (0x00 == data[1])
 
   _emitClicked: =>
     debug 'clicked'
