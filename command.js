@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 'use strict';
-require('coffee-script/register');
-require('fs-cson/register');
 
-var ConnectorRunner = require('meshblu-connector-runner');
-var MeshbluConfig   = require('meshblu-config');
+const ConnectorRunner = require('meshblu-connector-runner');
+const MeshbluConfig   = require('meshblu-config');
 
-var connectorRunner = new ConnectorRunner({
+const logger          = console;
+logger.debug          = console.info;
+
+const connectorRunner = new ConnectorRunner({
   connectorPath: __dirname,
-  meshbluConfig: new MeshbluConfig().toJSON()
+  meshbluConfig: new MeshbluConfig().toJSON(),
+  logger: logger,
 });
+
 connectorRunner.run()
