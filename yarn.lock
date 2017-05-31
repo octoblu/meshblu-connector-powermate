@@ -1241,9 +1241,33 @@ meshblu-config@^7.0.0:
     lodash "^3.9.1"
     meshblu-encryption "^2.0.1"
 
+meshblu-connector-cli@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/meshblu-connector-cli/-/meshblu-connector-cli-1.0.1.tgz#0a260962ff534f3eaacfe9adf1d8fe61ce1aaafa"
+  dependencies:
+    meshblu-connector-runner "^10.8.4"
+
 meshblu-connector-runner@^10.8.3:
   version "10.8.3"
   resolved "https://registry.yarnpkg.com/meshblu-connector-runner/-/meshblu-connector-runner-10.8.3.tgz#b7b2ac6d7164d0f04aa8e18305e5d7de4c596601"
+  dependencies:
+    async "^2.3.0"
+    bunyan "^1.8.9"
+    coffee-script "^1.12.4"
+    dashdash "^1.14.1"
+    fs-cson "^0.3.2"
+    fs-extra "^2.1.2"
+    glob "^7.0.5"
+    is-running "^2.0.0"
+    json-stable-stringify "^1.0.1"
+    lodash "^4.17.4"
+    meshblu "^3.0.0"
+    meshblu-config "^7.0.0"
+    meshblu-http "^9.8.0"
+
+meshblu-connector-runner@^10.8.4:
+  version "10.8.4"
+  resolved "https://registry.yarnpkg.com/meshblu-connector-runner/-/meshblu-connector-runner-10.8.4.tgz#519c95ae8f74e4c322463a18233867c17818dba6"
   dependencies:
     async "^2.3.0"
     bunyan "^1.8.9"

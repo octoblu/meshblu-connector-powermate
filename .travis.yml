@@ -26,7 +26,6 @@ after_success:
 - bash <(curl -s https://codecov.io/bash)
 - bash <(curl -s https://codecov.octoblu.com/bash)
 before_deploy:
-- yarn global add pkg cson coffeescript node-gyp
 - ./build.sh
 deploy:
 - provider: releases
