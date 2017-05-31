@@ -3,6 +3,9 @@
 set -e
 
 node_hid_madness() {
+  if [ ! -d ./node_modules/node-hid ]; then
+    return 0
+  fi
   echo '* build node-hid'
   if [ -n "$(which npm)" ] && [ "$TRAVIS_OS_NAME" == 'linux' ]; then
     echo '* installing on linux with hidraw'
@@ -30,12 +33,12 @@ install_deps() {
     yarn global add node-pre-gyp
   fi
   if [ -z "$(which coffee)" ]; then
-    echo '* installing coffeescript'
-    yarn global add coffeescript
+    echo '* coffee-script should be required as dev dependency'
+    exit 1
   fi
   if [ -z "$(which pkg)" ]; then
-    echo '* installing pkg'
-    yarn global add pkg
+    echo '* pkg should be required as dev dependency'
+    exit 1
   fi
 }
 
@@ -54,7 +57,7 @@ yarn_install() {
 }
 
 decoffee() {
-  echo '* decoffee'
+  echo '* decoffee this project'
   if [ -d ./src ]; then
     coffee --map --compile src/*.coffee
   fi
@@ -68,14 +71,14 @@ decoffee() {
 
 decoffee_index_file() {
   local module_name="$1"
-  local folder_name="$2"
-  local file_name="$3"
+  local require_path="$2"
+  local real_file_path="$3"
   if [ ! -d "$PWD/node_modules/$module_name" ]; then
     return 0
   fi
   pushd "$PWD/node_modules/$module_name" > /dev/null
     echo "* decoffee index file in $module_name"
-    echo "module.exports = require('./$folder_name/$file_name');" > ./index.js
+    echo "module.exports = require('$require_path');" > "$real_file_path"
   popd > /dev/null
 }
 
@@ -92,22 +95,23 @@ decoffee_module() {
 }
 
 main() {
-  install_deps
   yarn_install
+  install_deps
   decoffee
   decoffee_module 'meshblu-connector-runner' 'src'
-  decoffee_index_file 'meshblu-connector-runner' 'src' 'index.js'
+  decoffee_index_file 'meshblu-connector-runner' './src/index.js' './index.js'
+  decoffee_index_file 'meshblu-connector-runner' './src/runner.js' './runner.js'
   decoffee_module 'meshblu' 'src'
   decoffee_module 'meshblu-config' 'lib'
-  decoffee_index_file 'meshblu-config' 'lib' 'meshblu-config.js'
+  decoffee_index_file 'meshblu-config' './lib/meshblu-config.js' './index.js'
   decoffee_module 'meshblu-connector-schema-generator' 'src'
-  decoffee_index_file 'meshblu-connector-schema-generator' 'src' 'schema-generator.js'
+  decoffee_index_file 'meshblu-connector-schema-generator' './src/schema-generator.js' './index.js'
   decoffee_module 'meshblu-encryption' 'src'
-  decoffee_index_file 'meshblu-encryption' 'src' 'encryption.js'
+  decoffee_index_file 'meshblu-encryption' './src/encryption.js' './index.js'
   decoffee_module 'meshblu-http' 'src'
-  decoffee_index_file 'meshblu-http' 'src' 'meshblu-http.js'
+  decoffee_index_file 'meshblu-http' './src/meshblu-http.js' './index.js'
   decoffee_module 'srv-failover' 'src'
-  decoffee_index_file 'srv-failover' 'src' 'srv-failover.js'
+  decoffee_index_file 'srv-failover' './src/srv-failover.js' './index.js'
   node_hid_madness
   pkg_connector
 }

@@ -14,7 +14,8 @@
     "url": "https://github.com/octoblu/meshblu-connector-powermate.git"
   },
   "scripts": {
-    "start": "meshblu-connector-runner",
+    "build": "./build.sh",
+    "start": "meshblu-connector",
     "test": "mocha",
     "generate:package": "meshblu-connector-packager",
     "generate:schema": "meshblu-connector-schema-generator > schemas.json",
@@ -51,6 +52,7 @@
     "mocha-multi": "^0.11.0",
     "mocha-osx-reporter": "^0.1.2",
     "nyc": "^10.3.2",
+    "pkg": "^3.0.5",
     "segfault-handler": "^1.0.0",
     "sinon": "^2.3.2",
     "sinon-chai": "^2.10.0"
@@ -62,8 +64,7 @@
     "fs-cson": "^0.3.2",
     "lodash": "^4.17.4",
     "meshblu-config": "^7.0.0",
-    "meshblu-connector-cli": "^1.0.1",
-    "meshblu-connector-runner": "^10.8.3",
+    "meshblu-connector-cli": "^1.0.3",
     "meshblu-connector-schema-generator": "^2.1.0",
     "node-hid": "^0.5.4"
   },
