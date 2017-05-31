@@ -33,13 +33,13 @@
       "node7-win-x86"
     ],
     "scripts": [
+      "package.json",
       "index.js",
       "src/*.js",
       "jobs/**/*.js",
       "configs/**/*.js"
     ],
     "assets": [
-      "package.json",
       "jobs/**/*.json",
       "configs/**/*.json",
       "bin/*.node"
