@@ -22,6 +22,29 @@
     "mocha:json": "env NPM_ENV=test mocha --reporter json > coverage/mocha.json",
     "test:watch": "mocha -w -R mocha-multi --reporter-options spec=-,mocha-osx-reporter=-"
   },
+  "bin": "command.js",
+  "pkg": {
+    "targets": [
+      "node7-macos-x64",
+      "node7-linux-x64",
+      "node7-linux-x86",
+      "node7-win-x64",
+      "node7-win-x86"
+    ],
+    "scripts": [
+      "index.js",
+      "src/*.js",
+      "jobs/**/*.js",
+      "configs/**/*.js",
+      "node_modules/node-hid/nodehid.js"
+    ],
+    "assets": [
+      "package.json",
+      "jobs/**/*.json",
+      "configs/**/*.json",
+      "bin/HID.node"
+    ]
+  },
   "devDependencies": {
     "chai": "^4.0.0",
     "coffee-coverage": "^2.0.1",

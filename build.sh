@@ -66,8 +66,6 @@ main() {
   mkdir ./bin
   cp node_modules/node-hid/build/Release/HID.node ./bin/HID.node
   sed -ie "s@require(binding_path)@require(path.join(process.cwd(), 'bin', 'HID.node'))@" node_modules/node-hid/nodehid.js
-
-
   if [ -d ./dist ]; then
     rm -rf ./dist
   fi
@@ -75,8 +73,7 @@ main() {
   echo '* pkg connector'
   pkg --options expose-gc \
     --out-dir ./dist \
-    --config pkg-config.js \
-    command.js
+    .
 }
 
 main "$@"
