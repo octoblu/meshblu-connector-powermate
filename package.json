@@ -64,7 +64,7 @@
     "fs-cson": "^0.3.2",
     "lodash": "^4.17.4",
     "meshblu-config": "^7.0.0",
-    "meshblu-connector-cli": "^1.0.3",
+    "meshblu-connector-cli": "^1.0.6",
     "meshblu-connector-schema-generator": "^2.1.0",
     "node-hid": "^0.5.4"
   },
