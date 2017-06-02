@@ -34,3 +34,4 @@ devices
 .git
 deploy
 schemas.json
+dist

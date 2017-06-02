@@ -14,7 +14,8 @@
     "url": "https://github.com/octoblu/meshblu-connector-powermate.git"
   },
   "scripts": {
-    "build": "./build.sh",
+    "build": "coffee --compile --map --output dist/ src/*.coffee",
+    "package": "./package.sh",
     "start": "meshblu-connector",
     "test": "mocha",
     "generate:package": "meshblu-connector-packager",
@@ -25,13 +26,6 @@
   },
   "bin": "command.js",
   "pkg": {
-    "targets": [
-      "node7-macos-x64",
-      "node7-linux-x64",
-      "node7-linux-x86",
-      "node7-win-x64",
-      "node7-win-x86"
-    ],
     "scripts": [
       "package.json",
       "index.js",
@@ -46,27 +40,27 @@
     ]
   },
   "devDependencies": {
-    "chai": "^4.0.0",
+    "chai": "^4.0.1",
     "coffee-coverage": "^2.0.1",
+    "coffee-script": "^1.12.6",
     "mocha": "^3.4.2",
     "mocha-multi": "^0.11.0",
     "mocha-osx-reporter": "^0.1.2",
-    "nyc": "^10.3.2",
-    "pkg": "^3.0.5",
-    "segfault-handler": "^1.0.0",
+    "nyc": "^11.0.1",
+    "pkg": "^3.0.6",
     "sinon": "^2.3.2",
     "sinon-chai": "^2.10.0"
   },
   "dependencies": {
     "async": "^2.4.1",
-    "coffee-script": "^1.12.6",
     "debug": "^2.6.8",
     "fs-cson": "^0.3.2",
     "lodash": "^4.17.4",
-    "meshblu-config": "^7.0.0",
-    "meshblu-connector-cli": "^1.0.6",
-    "meshblu-connector-schema-generator": "^2.1.0",
-    "node-hid": "^0.5.4"
+    "meshblu-config": "^8.0.1",
+    "meshblu-connector-cli": "^1.0.7",
+    "meshblu-connector-schema-generator": "^3.0.1",
+    "node-hid": "^0.5.4",
+    "path-exists": "^3.0.0"
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-powermate"
