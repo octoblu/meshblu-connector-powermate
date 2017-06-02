@@ -31,11 +31,13 @@
       "index.js",
       "src/*.js",
       "jobs/**/*.js",
-      "configs/**/*.js"
+      "configs/**/*.js",
+      "node_modules/meshblu-connector-schema-generator/dist/*.js",
+      "node_modules/meshblu-connector-schema-generator/*.js",
+      "node_modules/meshblu-connector-runner/*.js",
+      "node_modules/meshblu-connector-runner/dist/*.js"
     ],
     "assets": [
-      "jobs/**/*.json",
-      "configs/**/*.json",
       "bin/*.node"
     ]
   },
@@ -57,7 +59,7 @@
     "fs-cson": "^0.3.2",
     "lodash": "^4.17.4",
     "meshblu-config": "^8.0.1",
-    "meshblu-connector-cli": "^1.0.7",
+    "meshblu-connector-cli": "^1.0.10",
     "meshblu-connector-schema-generator": "^3.0.1",
     "node-hid": "^0.5.4",
     "path-exists": "^3.0.0"
