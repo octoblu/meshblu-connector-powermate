@@ -25,22 +25,6 @@
     "test:watch": "mocha -w -R mocha-multi --reporter-options spec=-,mocha-osx-reporter=-"
   },
   "bin": "command.js",
-  "pkg": {
-    "scripts": [
-      "package.json",
-      "index.js",
-      "src/*.js",
-      "jobs/**/*.js",
-      "configs/**/*.js",
-      "node_modules/meshblu-connector-schema-generator/dist/*.js",
-      "node_modules/meshblu-connector-schema-generator/*.js",
-      "node_modules/meshblu-connector-runner/*.js",
-      "node_modules/meshblu-connector-runner/dist/*.js"
-    ],
-    "assets": [
-      "bin/*.node"
-    ]
-  },
   "devDependencies": {
     "chai": "^4.0.1",
     "coffee-coverage": "^2.0.1",
@@ -49,7 +33,6 @@
     "mocha-multi": "^0.11.0",
     "mocha-osx-reporter": "^0.1.2",
     "nyc": "^11.0.1",
-    "pkg": "^3.0.6",
     "sinon": "^2.3.2",
     "sinon-chai": "^2.10.0"
   },
@@ -89,6 +72,19 @@
     ],
     "extension": [
       ".coffee"
+    ]
+  },
+  "pkg": {
+    "scripts": [
+      "package.json",
+      "index.js",
+      "src/*.js",
+      "jobs/**/*.js",
+      "configs/**/*.js",
+      "node_modules/meshblu-connector-schema-generator/dist/*.js",
+      "node_modules/meshblu-connector-schema-generator/*.js",
+      "node_modules/meshblu-connector-runner/*.js",
+      "node_modules/meshblu-connector-runner/dist/*.js"
     ]
   }
 }

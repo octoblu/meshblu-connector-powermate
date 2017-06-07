@@ -54,3 +54,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+## Build on ARM
+```
+../dockcross-node/dockcross-linux-armv7 --image octoblu/dockcross-node-linux-armv7 bash -c 'export HOME=/tmp/cache && yarn install && yarn build && meshblu-connector-pkger'
+cp HID.node meshblu-connector-powermate meshblu-connector-powermate_2.0.11-1/usr/share/meshblu-connector-pm2/connectors/meshblu-connector-powermate; and rm  -rf meshblu-connector-powermate_2.0.11-1/DEBIAN meshblu-connector-powermate_2.0.11-1/etc; cp -rfp ../.installer/debian/* meshblu-connector-powermate_2.0.11-1 ; and dpkg --build meshblu-connector-powermate_2.0.11-1; and scp meshblu-connector-powermate_2.0.11-1.deb pi@192.168.100.141:; and ssh pi@192.168.100.141 "sudo dpkg -i ./meshblu-connector-powermate_2.0.11-1.deb"
