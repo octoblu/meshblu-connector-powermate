@@ -21,6 +21,8 @@ addons:
     - libbluetooth-dev
     - libudev-dev
     - libusb-1.0-0-dev
+install:
+- npm install --build-from-source
 after_success:
 - npm run coverage
 - npm run mocha:json
