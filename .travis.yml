@@ -1,10 +1,9 @@
 language: node_js
 node_js:
-- '8.0.0'
+- '8'
 os: linux
 env:
   global:
-    CXX: g++-4.8
     secure: h2f1cQXkrQKmlhZBwZSpgQxYoQc/m8V2Gmuj1UVmW0Naw3AbRdJyoZo7bKRNt/16n4Y44QMEZjf9rk2nhdFX98vV/eW3s/anb2ngsVg/6H9Hc3W2LOye3AuY6TjjviVruOI8yfVwkTfnrtSdaqKBI4msrq/Wxcczah6qg6mQ/VG46DAvQwaB87WgH69tcL++7Lr/B70yPNzNqlHXwLmy4rOEHEs+6FUBpmHifjOT0m9CMFyExDEoORcLbAYl4l8z9Ibl8diWEAHfkZj5htm666dW8pwVULfSC+8mSLKkgmvOmDFNJs62lIn+XNjx74W1vlCdx5lYVhQraVqtxuS9rtGXAUqxp98dCeFyeiLjmyLHFw0PI4LYJwwA1N13i68Eh3IX8KW+7FW8zIcLa5Bq/eXlXPgNgM7Zx0G1LZzX7HoFgHAUYY1OBFAb3nOG9OM/Y+6ut2tcDNE6P6aj0TR8ilBgFTSqrFAmEgUt56DxAcA4zZiZswI382H0RP+09+JXJ+TJlQ7up87S2OdWHeHIeWJbbltfMkxp7sVJFTmAfSHAY4r7T3yLlIIemghtyyITEiK6MUyrYzorlzyrjG3Mu9kVd/wQZvjwVFyXQxLqeISlOeXKQBbWxwwHoVybMSxN7bzpQuSbriQLAT7Jrii/WPqsvDnCiax5k3p8MRitbKI=
 branches:
   only:
@@ -23,6 +22,7 @@ addons:
     - libudev-dev
     - libusb-1.0-0-dev
 before_install:
+- if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
 - yarn global add node-gyp node-pre-gyp
 after_success:
 - npm run coverage
