@@ -1,13 +1,13 @@
-'use strict';
+"use strict"
 
-var pathExists = require('path-exists');
-var connector  = null;
+var pathExists = require("path-exists")
+var connector = null
 
-if (pathExists.sync('./dist/index.js')) {
-  connector = require('./dist')
+if (pathExists.sync("./dist/index.js")) {
+  connector = require("./dist")
 } else {
-  require('coffee-script/register');
-  connector = require('./src');
+  require("coffee-script/register")
+  connector = require("./src")
 }
 
-module.exports = connector;
+module.exports = connector

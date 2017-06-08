@@ -1,9 +1,7 @@
 language: node_js
 node_js:
-  - '7'
-os:
-- linux
-- osx
+  - '8'
+os: linux
 branches:
   only:
   - '/^v[0-9]/'
@@ -26,17 +24,11 @@ after_success:
 - bash <(curl -s https://codecov.io/bash)
 - bash <(curl -s https://codecov.octoblu.com/bash)
 before_deploy:
-- yarn package
+- yarn global add meshblu-connector-pkger meshblu-connector-installer-debian meshblu-connector-github-uploader
+- meshblu-connector-pkger
+- meshblu-connector-installer-debian
+- meshblu-connector-github-uploader
 deploy:
-- provider: releases
-  api_key:
-    secure: "nAD0ARFEPjZRjfJc987HvtAfNNvpnB71wVhUeYFgdN/5xjuj3BGjjXcBVEOYORDJdWRlQqi+bzh4Bf3aHggqEMoa7vrMqWKVf+af+q6Fb352DaAC4wynVn3VfsmfjVseEIpMPBGsyy3+4hg3Yxa/qkeQ5owGVVyszDXF4x8YWHCVsTZ6xWnU7Rjwzb5w2x5oEw79iXHE8uI1bw9RoObIHSnbzDw01WFjtCVJE5abXE8D9oeb3thF1lrAbU1hw6s4xgnAQnxK0WNpUEplvFL3/Tzrkg64pKRQpSEE8CkcPrrcQiptsaud0pBNqKip0tE/xzImfJviChoND5oDrcfmFsB3e2aajk4tQVQYDnIWCBCixWBs3RseQhkIuxhDbxUuQ8Hmzg1Hbp6cbQxmMRAOf7jTsFbCXrSA6ZgZNBxEHNqy4Hy3A+NcB9WFRw1neixWlx09gcujOp/cOX5FAGIHcjmjxbOPzNzWlN6SD719f4J7fHmayocs/GVLbzXSnONpXH+XmY8v/d7BNoPDo7O2arwQFJmZUKhzyEYMXibBY3n42Az00aSWqlHCLrHx/CfVHiM48MuLOlMRTHEcohAhlVbReVS7d7AGPeKw/iCGJNepfE7hY7fiHTGq8nPQTR3qrXQt7ZiF5OaAZ0FhF446SMvgkJgAAUdUB/ryTBHjkiA="
-  file_glob: true
-  file:
-  - "deploy/*"
-  skip_cleanup: true
-  on:
-    tags: true
 - provider: npm
   email: serveradmin@octoblu.com
   skip_cleanup: true

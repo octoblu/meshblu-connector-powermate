@@ -1,7 +1,0 @@
-Package: meshblu-connector-powermate
-Version: 2.0.11-1
-Section: base
-Priority: optional
-Architecture: armhf
-Maintainer: Octoblu, Inc. <npm@octoblu.com>
-Description: Meshblu Connector for powermate
