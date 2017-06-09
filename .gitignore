@@ -43,3 +43,4 @@ src/*.json
 
 dist
 bin
+dockcross-node
