@@ -18,12 +18,15 @@ matrix:
     - docker pull octoblu/dockcross-node:linux-armv7
     script:
     - |
-      docker run --rm --volume $PWD:/work --env TRAVIS_SLUG=$TRAVIS_SLUG octoblu/dockcross-node:linux-armv7 \
-        bash -c 'export HOME=/tmp/cache \
-          && meshblu-connector-pkger \
-          && meshblu-connector-installer-debian \
-          && meshblu-connector-uploader-github \
-        '
+      docker run --rm --volume $PWD:/work --env TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
+        --env TRAVIS_BRANCH=$TRAVIS_BRANCH \
+        --env MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN=$MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN \
+        octoblu/dockcross-node:linux-armv7 \
+          bash -c 'export HOME=/tmp/cache \
+            && meshblu-connector-pkger \
+            && meshblu-connector-installer-debian \
+            && meshblu-connector-uploader-github \
+          '
   - os: linux
     language: node_js
     node_js: '8'
