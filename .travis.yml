@@ -14,15 +14,13 @@ matrix:
     sudo: required
     services:
     - docker
-    before_install:
-    - docker pull octoblu/dockcross-node:linux-armv7
     install:
-    - docker run --rm octoblu/dockcross-node:linux-armv7 > dockcross-node && chmod +x ./dockcross-node
+    - docker pull octoblu/dockcross-node:linux-armv7
     script:
     - |
-      ./dockcross-node --image octoblu/dockcross-node:linux-armv7 \
+      docker run --rm --volume $PWD:/work --env TRAVIS_SLUG=$TRAVIS_SLUG octoblu/dockcross-node:linux-armv7 \
         bash -c 'export HOME=/tmp/cache \
-          && meshblu-connector-pkger --target=node8-linux-armv7 \
+          && meshblu-connector-pkger \
           && meshblu-connector-installer-debian \
           && meshblu-connector-uploader-github \
         '
