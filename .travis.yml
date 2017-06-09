@@ -1,7 +1,3 @@
-language: node_js
-node_js:
-- '8'
-os: linux
 branches:
   only:
   - "/^v[0-9]/"
@@ -35,6 +31,8 @@ matrix:
           && meshblu-connector-uploader-github \
         '
   - os: linux
+    language: node_js
+    node_js: '8'
     addons:
       apt:
         sources:
