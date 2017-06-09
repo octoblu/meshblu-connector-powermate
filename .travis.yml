@@ -17,11 +17,12 @@ matrix:
     before_install:
     - docker pull octoblu/dockcross-node:linux-armv7
     install:
-    - docker run octoblu/dockcross-node:linux-armv7 > dockcross-node && chmod +x ./dockcross-node
+    - docker run --rm octoblu/dockcross-node:linux-armv7 > dockcross-node && chmod +x ./dockcross-node
     script:
     - |
       ./dockcross-node --image octoblu/dockcross-node:linux-armv7 \
         bash -c 'export HOME=/tmp/cache \
+          && env \
           && yarn install \
           && meshblu-connector-pkger --target=node8-linux-armv7 \
           && meshblu-connector-installer-debian \
