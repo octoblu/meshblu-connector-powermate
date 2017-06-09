@@ -22,11 +22,8 @@ matrix:
     - |
       ./dockcross-node --image octoblu/dockcross-node:linux-armv7 \
         bash -c 'export HOME=/tmp/cache \
-          && gosu root yarn global add \
-          meshblu-connector-pkger --target node8-linux-armv7 \
-            meshblu-connector-installer-debian \
-            meshblu-connector-uploader-github \
-          && meshblu-connector-pkger \
+          && yarn install \
+          && meshblu-connector-pkger --target=node8-linux-armv7 \
           && meshblu-connector-installer-debian \
           && meshblu-connector-uploader-github \
         '
