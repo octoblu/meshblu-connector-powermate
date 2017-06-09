@@ -50,7 +50,6 @@ matrix:
     - npm run mocha:json
     - bash <(curl -s https://codecov.io/bash)
     - bash <(curl -s https://codecov.octoblu.com/bash)
-    before_deploy:
     - yarn global add meshblu-connector-pkger meshblu-connector-installer-debian meshblu-connector-uploader-github
     - meshblu-connector-pkger
     - meshblu-connector-installer-debian
