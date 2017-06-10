@@ -9,8 +9,7 @@ matrix:
   include:
   - os: linux
     dist: trusty
-    language: node_js
-    node_js: '8'
+    language: shell
     sudo: required
     services:
     - docker
@@ -18,7 +17,8 @@ matrix:
     - docker pull octoblu/dockcross-node:linux-armv7
     script:
     - |
-      docker run --rm --volume $PWD:/work --env TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
+      docker run --rm --volume $PWD:/work \
+        --env TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
         --env TRAVIS_BRANCH=$TRAVIS_BRANCH \
         --env MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN=$MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN \
         octoblu/dockcross-node:linux-armv7 \
@@ -28,37 +28,22 @@ matrix:
             && meshblu-connector-uploader-github \
           '
   - os: linux
-    language: node_js
-    node_js: '8'
-    addons:
-      apt:
-        sources:
-        - ubuntu-toolchain-r-test
-        packages:
-        - g++-4.8
-        - g++-4.8-multilib
-        - gcc-multilib
-        - build-essential
-        - libbluetooth-dev
-        - libudev-dev
-        - libusb-1.0-0-dev
-    before_install:
-    - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
-    - yarn global add node-gyp node-pre-gyp
-    after_success:
-    - npm run coverage
-    - npm run mocha:json
-    - bash <(curl -s https://codecov.io/bash)
-    - bash <(curl -s https://codecov.octoblu.com/bash)
-    - yarn global add meshblu-connector-pkger meshblu-connector-installer-debian meshblu-connector-uploader-github
-    - meshblu-connector-pkger
-    - meshblu-connector-installer-debian
-    - meshblu-connector-uploader-github
-    deploy:
-    - provider: npm
-      email: serveradmin@octoblu.com
-      skip_cleanup: true
-      api_key:
-        secure: uTNCvXU1tSHoOeLUzMq9rJbWKl03SlwZ0FiI40iEZNkbVn9HDt/nLWH47KCdqVQJhmtRcWhUlqURtC18JGHNO84I+D18lYeklncwrf2nSbTjFTANrX9WHWTRhxZNAEuLfuPvukHJHUZUq1KyG8kvTVGTnL1Fq/spoJlU8xJdb+4i8oCAQenMo30N5SvGoD8CCK+RgTCJlpc23JTpvLmlz0XfMq2rknji0HU2RDU7TMzCF0Tpb/i4cMauIQOuLv6kqFxcz1ESxMz+nT54elFM0yy2Vi4w/0Ay2vonC+WPYCrLDxRBRsJZ4gHzYixH9raVDEtTb0dszmCnxx42KnZme1+rUIze1xiwpFTYwlh6Oswtg+ILpbTwmbK5rhqsSF0C16dnnyGomJoOi55DuL/wrx4Exsl9hyA+vaXxitXWOlcAYt0Mqct8E1SZrui6fLKKNzVrLEAfOsgIWKMqjxhtrtIQsJrOi4ach8mPqCCQXLsZ2NzSrC604hCWphDO4Asn+rdIsbImExz94TaCVqm9sZf9QtRLKy8gARC+u8S7v3pWn8SlwBgYGToGK710E/CBJleOQHT0XQwAedZ17aZ5cNKvHnqXWgVL3gof60Ww9G33zmGj5NUkV8lWYfmaM0Ct7j7jjrYUjCZFDVQs0GFRzxBeV8OPrEwk5Chebpkf5Kc=
-      on:
-        tags: true
+    dist: trusty
+    language: shell
+    sudo: required
+    services:
+    - docker
+    install:
+    - docker pull octoblu/dockcross-node:linux-x86
+    script:
+    - |
+      docker run --rm --volume $PWD:/work \
+        --env TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG \
+        --env TRAVIS_BRANCH=$TRAVIS_BRANCH \
+        --env MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN=$MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN \
+        octoblu/dockcross-node:linux-x86 \
+          bash -c 'export HOME=/tmp/cache \
+            && meshblu-connector-pkger \
+            && meshblu-connector-installer-debian \
+            && meshblu-connector-uploader-github \
+          '
