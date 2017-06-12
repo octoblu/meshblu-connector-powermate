@@ -4,7 +4,8 @@ branches:
   - executable-build
 env:
   global:
-    secure: h2f1cQXkrQKmlhZBwZSpgQxYoQc/m8V2Gmuj1UVmW0Naw3AbRdJyoZo7bKRNt/16n4Y44QMEZjf9rk2nhdFX98vV/eW3s/anb2ngsVg/6H9Hc3W2LOye3AuY6TjjviVruOI8yfVwkTfnrtSdaqKBI4msrq/Wxcczah6qg6mQ/VG46DAvQwaB87WgH69tcL++7Lr/B70yPNzNqlHXwLmy4rOEHEs+6FUBpmHifjOT0m9CMFyExDEoORcLbAYl4l8z9Ibl8diWEAHfkZj5htm666dW8pwVULfSC+8mSLKkgmvOmDFNJs62lIn+XNjx74W1vlCdx5lYVhQraVqtxuS9rtGXAUqxp98dCeFyeiLjmyLHFw0PI4LYJwwA1N13i68Eh3IX8KW+7FW8zIcLa5Bq/eXlXPgNgM7Zx0G1LZzX7HoFgHAUYY1OBFAb3nOG9OM/Y+6ut2tcDNE6P6aj0TR8ilBgFTSqrFAmEgUt56DxAcA4zZiZswI382H0RP+09+JXJ+TJlQ7up87S2OdWHeHIeWJbbltfMkxp7sVJFTmAfSHAY4r7T3yLlIIemghtyyITEiK6MUyrYzorlzyrjG3Mu9kVd/wQZvjwVFyXQxLqeISlOeXKQBbWxwwHoVybMSxN7bzpQuSbriQLAT7Jrii/WPqsvDnCiax5k3p8MRitbKI=
+  - secure: h2f1cQXkrQKmlhZBwZSpgQxYoQc/m8V2Gmuj1UVmW0Naw3AbRdJyoZo7bKRNt/16n4Y44QMEZjf9rk2nhdFX98vV/eW3s/anb2ngsVg/6H9Hc3W2LOye3AuY6TjjviVruOI8yfVwkTfnrtSdaqKBI4msrq/Wxcczah6qg6mQ/VG46DAvQwaB87WgH69tcL++7Lr/B70yPNzNqlHXwLmy4rOEHEs+6FUBpmHifjOT0m9CMFyExDEoORcLbAYl4l8z9Ibl8diWEAHfkZj5htm666dW8pwVULfSC+8mSLKkgmvOmDFNJs62lIn+XNjx74W1vlCdx5lYVhQraVqtxuS9rtGXAUqxp98dCeFyeiLjmyLHFw0PI4LYJwwA1N13i68Eh3IX8KW+7FW8zIcLa5Bq/eXlXPgNgM7Zx0G1LZzX7HoFgHAUYY1OBFAb3nOG9OM/Y+6ut2tcDNE6P6aj0TR8ilBgFTSqrFAmEgUt56DxAcA4zZiZswI382H0RP+09+JXJ+TJlQ7up87S2OdWHeHIeWJbbltfMkxp7sVJFTmAfSHAY4r7T3yLlIIemghtyyITEiK6MUyrYzorlzyrjG3Mu9kVd/wQZvjwVFyXQxLqeISlOeXKQBbWxwwHoVybMSxN7bzpQuSbriQLAT7Jrii/WPqsvDnCiax5k3p8MRitbKI=
+  - secure: O0jP69044n0kT8eZEQZhy7UF1u1AV6wS87L10NOap0cT3wUHq2Bn86/WXLA6abkNyN40U6ixFNNH1oG9+fPy2los/ZBG+V+zVxaxIYTJxyKNmRXRJKncUdkSRsbCQxxOP3T33MgXDwznVarbaEbWxOzAi9qSFy3bXj9x3G/okT63b0IrRKoid7Epp8zPIMxWJemh+2eL+63KdYfS52s3XHOIV3QjEg1Lf2S4v68njsqzYsU3TOPa8gTeOTUqYzszVLeTb5WYvZs46lXa+YwSct5X0UcFkQwFc0Vvod0TEVBMx9Luk0t5ZxiyrpsrISPasDlaJZlU4FemOtdUcv/Idk4IpNx4OK31c4uH5oHj7AigHwlLePU3MayOH1/1bJWVRf5dzgRgxW1dYJbUEGPIaVRjxjjh2EuQVPLgEOVJUNldVXsPU9kZTIg2iB4CAy4kV2N09C3eWBQA7zgI458bUPLrpm8jEvDRndP6U2qPHQdrjL6d3wgQ3xJSKsI9bJ2AFij5ILm7PAJbOAPIqSteUMW9zW2CvHcG+p9Wciq6Ft/IQCxV2Dv7Ppo7TJd3pHuBf8Dmk9x4A6RLwjp1u7y2LacmOSBru7Ve0Nx4IRSRbNL3N/tqRTanUuErGZR5CxNHpSDtfWLJq40LDe/cKALRhK3tDD4GJ0dCu95ptm5vEhE=
 matrix:
   include:
   - os: linux
@@ -67,3 +68,16 @@ matrix:
             && meshblu-connector-installer-debian \
             && meshblu-connector-uploader-github \
           '
+  - os: osx
+    language: cpp
+    sudo: required
+    services:
+    - docker
+    install:
+    - nvm install 8
+    - yarn global add meshblu-connector-pkger meshblu-connector-installer-macos meshblu-connector-uploader-github
+    script:
+    - |
+      meshblu-connector-pkger \
+      && meshblu-connector-installer-macos \
+      && meshblu-connector-uploader-github
