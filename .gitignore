@@ -44,3 +44,4 @@ src/*.json
 dist
 bin
 dockcross-node
+pkg-config.json
