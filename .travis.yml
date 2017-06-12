@@ -69,15 +69,8 @@ matrix:
             && meshblu-connector-uploader-github \
           '
   - os: osx
-    language: cpp
-    sudo: required
-    services:
-    - docker
-    install:
-    - nvm install 8
+    node_js: "8"
+    language: node_js 
+    after_success:
     - yarn global add meshblu-connector-pkger meshblu-connector-installer-macos meshblu-connector-uploader-github
-    script:
-    - |
-      meshblu-connector-pkger \
-      && meshblu-connector-installer-macos \
-      && meshblu-connector-uploader-github
+    - meshblu-connector-pkger && meshblu-connector-installer-macos && meshblu-connector-uploader-github
