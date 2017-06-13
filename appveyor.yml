@@ -21,7 +21,7 @@ install:
   - SET GYP_MSVS_VERSION=2013
   - if "%PLATFORM%" == "x64" SET PATH=C:\Python27-x64;%PATH%
   - if "%PLATFORM%" == "x86" SET PATH=C:\python27;%PATH%
-  - SET PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin
+  - SET PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin;C:\Program Files (x86)\WiX Toolset v3.11\bin
   - yarn global add meshblu-connector-pkger meshblu-connector-installer-windows-msi meshblu-connector-uploader-github
   - yarn install
 build: off
