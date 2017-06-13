@@ -2,6 +2,8 @@ environment:
   nodejs_version: 8.1.0
   MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN:
     secure: CJ8qK8VcRaGDJMfJc4htvN2aWjWV4yuhjxnKfo/9UR2AqbGJneHIopWj25AVgP2u
+  MESHBLU_CONNECTOR_CERT_PASSWORD:
+    secure: VBKIzTLVbFlvUuMqnW0Y4w==
 platform:
   - x64
   - x86
