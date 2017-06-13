@@ -16,14 +16,12 @@ install:
   - node --version
   - npm --version
   - node -e "console.log(process.arch);"
-  - ps: Get-ChildItem -Path C:\ -Include signtool.exe -File -Recurse -ErrorAction SilentlyContinue
   - FOR /F "delims=" %%a IN ('node -e "console.log(require('./package.json').version)"') DO SET PACKAGE_VERSION=%%~a
   - SET PATH=C:\Program Files (x86)\MSBuild\12.0\bin\;%PATH%
   - SET GYP_MSVS_VERSION=2013
   - if "%PLATFORM%" == "x64" SET PATH=C:\Python27-x64;%PATH%
   - if "%PLATFORM%" == "x86" SET PATH=C:\python27;%PATH%
-  - if "%PLATFORM%" == "x64" SET PATH=%PATH%;C:\Program Files (x86)\Windows Kits\10\bin\10.0.15063.0\x64
-  - if "%PLATFORM%" == "x86" SET PATH=%PATH%;C:\Program Files (x86)\Windows Kits\10\bin\10.0.15063.0\x86
+  - SET PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin
   - yarn global add meshblu-connector-pkger meshblu-connector-installer-windows-msi meshblu-connector-uploader-github
   - yarn install
 build: off
