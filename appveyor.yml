@@ -10,7 +10,7 @@ platform:
 cache:
  - "%LOCALAPPDATA%\\Yarn"
 shallow_clone: true
-skip_non_tags: false
+skip_non_tags: true
 install:
   - ps: Install-Product node $env:nodejs_version $env:Platform
   - node --version
