@@ -20,6 +20,7 @@ install:
   - if "%PLATFORM%" == "x64" set PATH=C:\Python27-x64;%PATH%
   - if "%PLATFORM%" == "x86" SET PATH=C:\python27;%PATH%
   - yarn global add meshblu-connector-pkger meshblu-connector-installer-windows-msi meshblu-connector-uploader-github
+  - yarn install
 build: off
 test_script:
   - yarn test
