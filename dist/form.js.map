@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "form.js",
+  "sourceRoot": "..",
+  "sources": [
+    "configs/default/form.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;EAAA,MAAM,CAAC,OAAP,GAAiB;IAAA,OAAA,EAAS,EAAT;;AAAjB"
+}

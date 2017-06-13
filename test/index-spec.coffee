@@ -1,7 +1,7 @@
 {describe,beforeEach,it,expect} = global
 _         = require 'lodash'
 sinon     = require 'sinon'
-Connector = require '../'
+Connector = require '../src/'
 
 describe 'Connector', ->
   beforeEach ->
