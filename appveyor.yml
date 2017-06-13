@@ -1,0 +1,30 @@
+environment:
+  nodejs_version: 8.1.0
+platform:
+  - x64
+  - x86
+environment:
+  MESHBLU_CONNECTOR_UPLOADER_GITHUB_TOKEN:
+    secure: CJ8qK8VcRaGDJMfJc4htvN2aWjWV4yuhjxnKfo/9UR2AqbGJneHIopWj25AVgP2u
+cache:
+ - "%LOCALAPPDATA%\\Yarn"
+shallow_clone: true
+skip_non_tags: false
+install:
+  - ps: Install-Product node $env:nodejs_version $env:Platform
+  - node --version
+  - npm --version
+  - node -e "console.log(process.arch);"
+  - FOR /F "delims=" %%a IN ('node -e "console.log(require('./package.json').version)"') DO SET PACKAGE_VERSION=%%~a
+  - SET PATH=C:\Program Files (x86)\MSBuild\12.0\bin\;%PATH%
+  - SET GYP_MSVS_VERSION=2013
+  - if "%PLATFORM%" == "x64" set PATH=C:\Python27-x64;%PATH%
+  - if "%PLATFORM%" == "x86" SET PATH=C:\python27;%PATH%
+  - yarn global add meshblu-connector-pkger meshblu-connector-installer-windows-msi meshblu-connector-uploader-github
+build: off
+test_script:
+  - yarn test
+build_success:
+  - meshblu-connector-pkger
+  - meshblu-connector-installer-windows-msi
+  - meshblu-connector-uploader-github
