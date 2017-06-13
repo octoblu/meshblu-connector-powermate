@@ -23,7 +23,7 @@ install:
 build: off
 test_script:
   - yarn test
-build_success:
+after_test:
   - meshblu-connector-pkger
   - meshblu-connector-installer-windows-msi
   - meshblu-connector-uploader-github
