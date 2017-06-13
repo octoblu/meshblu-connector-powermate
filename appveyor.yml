@@ -16,7 +16,7 @@ install:
   - node --version
   - npm --version
   - node -e "console.log(process.arch);"
-  - Get-ChildItem -Path C:\ -Include signtool.exe -File -Recurse -ErrorAction SilentlyContinue
+  - ps: Get-ChildItem -Path C:\ -Include signtool.exe -File -Recurse -ErrorAction SilentlyContinue
   - FOR /F "delims=" %%a IN ('node -e "console.log(require('./package.json').version)"') DO SET PACKAGE_VERSION=%%~a
   - SET PATH=C:\Program Files (x86)\MSBuild\12.0\bin\;%PATH%
   - SET GYP_MSVS_VERSION=2013
