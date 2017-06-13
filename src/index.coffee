@@ -1,7 +1,7 @@
 _               = require 'lodash'
 async           = require 'async'
 {EventEmitter}  = require 'events'
-Powermate       = require '../src/powermate'
+Powermate       = require './powermate'
 debug           = require('debug')('meshblu-connector-powermate:index')
 
 class Connector extends EventEmitter

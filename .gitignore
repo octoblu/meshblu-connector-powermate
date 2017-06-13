@@ -41,7 +41,7 @@ src/*.js
 src/*.js.map
 src/*.json
 
-dist
+lib
 bin
 dockcross-node
 pkg-config.json
