@@ -8,6 +8,14 @@ env:
 matrix:
   include:
   - os: linux
+    language: node_js
+    node_js: '8'
+    after_success:
+      - yarn global add meshblu-connector-schema-generator meshblu-connector-uploader-github
+      - mkdir -p ./deploy/assets
+      - meshblu-connector-schema-generator > ./deploy/assets/schemas.json
+      - meshblu-connector-uploader-github --installer-path ./deploy/assets
+  - os: linux
     dist: trusty
     language: shell
     sudo: required

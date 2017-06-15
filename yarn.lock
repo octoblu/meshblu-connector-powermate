@@ -455,7 +455,7 @@ cson-parser@^1.0.9:
   dependencies:
     coffee-script "^1.10.0"
 
-dashdash@^1.12.0, dashdash@^1.14.0, dashdash@^1.14.1:
+dashdash@^1.12.0, dashdash@^1.14.1:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
   dependencies:
@@ -790,7 +790,7 @@ glob-parent@^2.0.0:
   dependencies:
     is-glob "^2.0.0"
 
-glob@7.1.1, glob@^7.0.5, glob@^7.0.6:
+glob@7.1.1, glob@^7.0.6:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.1.tgz#805211df04faaf1c63a3600306cdf5ade50b2ec8"
   dependencies:
@@ -811,7 +811,7 @@ glob@^6.0.1:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.1.2:
+glob@^7.0.5, glob@^7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -1341,18 +1341,6 @@ meshblu-connector-runner@^11.0.4:
     path-exists "^3.0.0"
   optionalDependencies:
     bunyan "^1.8.10"
-
-meshblu-connector-schema-generator@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/meshblu-connector-schema-generator/-/meshblu-connector-schema-generator-3.0.1.tgz#dda683a6a20c36baaaf23011e2b840e24b594ee9"
-  dependencies:
-    async "^2.4.1"
-    dashdash "^1.14.0"
-    fs-cson "^0.3.2"
-    glob "^7.0.5"
-    json-stable-stringify "^1.0.1"
-    lodash "^4.13.1"
-    path-exists "^3.0.0"
 
 meshblu-encryption@^3.0.1:
   version "3.0.1"
