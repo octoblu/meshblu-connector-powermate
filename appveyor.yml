@@ -30,4 +30,5 @@ test_script:
 after_test:
   - meshblu-connector-pkger
   - meshblu-connector-installer-windows-msi
+  - meshblu-connector-installer-windows-msi --user-install
   - meshblu-connector-uploader-github
