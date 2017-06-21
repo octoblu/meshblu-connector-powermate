@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-powermate",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Meshblu Connector Powermate",
   "homepage": "https://github.com/octoblu/meshblu-connector-powermate",
   "bugs": "https://github.com/octoblu/meshblu-connector-powermate/issues",
@@ -14,7 +14,7 @@
     "url": "https://github.com/octoblu/meshblu-connector-powermate.git"
   },
   "scripts": {
-    "build": "coffee --compile --map --output lib/ src/*.coffee",
+    "build": "coffee --compile --map --output lib/ src/",
     "start": "meshblu-connector",
     "test": "mocha",
     "coverage": "nyc npm test",
