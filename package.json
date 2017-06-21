@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-powermate",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Meshblu Connector Powermate",
   "homepage": "https://github.com/octoblu/meshblu-connector-powermate",
   "bugs": "https://github.com/octoblu/meshblu-connector-powermate/issues",
@@ -30,7 +30,7 @@
     "mocha-multi": "^0.11.0",
     "mocha-osx-reporter": "^0.1.2",
     "nyc": "^11.0.2",
-    "sinon": "^2.3.4",
+    "sinon": "^2.3.5",
     "sinon-chai": "^2.11.0"
   },
   "dependencies": {
@@ -38,7 +38,7 @@
     "debug": "^2.6.8",
     "lodash": "^4.17.4",
     "meshblu-config": "^8.0.1",
-    "meshblu-connector-cli": "^1.0.10",
+    "meshblu-connector-cli": "^1.1.4",
     "node-hid": "^0.5.4",
     "path-exists": "^3.0.0"
   },
