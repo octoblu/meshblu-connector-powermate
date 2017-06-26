@@ -5,6 +5,7 @@ debug          = require('debug')('meshblu-connector-powermate:powermate')
 class Powermate extends EventEmitter
   constructor: ({ @HID }={}) ->
     @HID ?= require 'node-hid'
+    @_throttledOnData = _.throttle @_onData, 500, leading: true, trailing: false
 
   connect: (callback) =>
     return callback null if @device?
@@ -15,8 +16,7 @@ class Powermate extends EventEmitter
       return callback @_createError 412, 'More than one Powermate device found'
     { path } = _.first(devices)
     @device = new @HID.HID path
-    @_throttledEmitClicked = _.throttle @_emitClicked, 1000, leading: true, trailing: false
-    @device.on 'data', @_onData
+    @device.on 'data', @_throttledOnData
     @device.once 'error', (error) =>
       @_emitError error
       @close()
@@ -34,11 +34,21 @@ class Powermate extends EventEmitter
 
   _onData: (data) =>
     debug '_onData', data
-    @_throttledEmitClicked() if data[0] || (0x00 == data[1])
+    @_emitClicked() if data[0] || (0x00 == data[1])
+    @_emitRotateLeft() if data[1] == 0xff
+    @_emitRotateRight() if data[1] == 0x01
 
   _emitClicked: =>
     debug 'clicked'
     @emit 'clicked'
+
+  _emitRotateLeft: =>
+    debug 'rotateLeft'
+    @emit 'rotateLeft'
+
+  _emitRotateRight: =>
+    debug 'rotateRight'
+    @emit 'rotateRight'
 
   _emitError: (error) =>
     return unless @isConnected()

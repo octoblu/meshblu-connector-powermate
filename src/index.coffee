@@ -10,6 +10,8 @@ class Connector extends EventEmitter
     @powermate ?= new Powermate
     @powermate.on 'error', @_onError
     @powermate.on 'clicked', @_onClicked
+    @powermate.on 'rotateLeft', @_onRotateLeft
+    @powermate.on 'rotateRight', @_onRotateRight
 
   close: (callback) =>
     debug 'closing'
@@ -46,14 +48,21 @@ class Connector extends EventEmitter
     @emit 'error', error
 
   _onClicked: =>
-    return debug 'clicked but no device on scope' if _.isEmpty @device
-    debug 'emitting clicked message'
+    @_sendMessage 'click'
+
+  _onRotateLeft: =>
+    @_sendMessage 'rotateLeft'
+
+  _onRotateRight: =>
+    @_sendMessage 'rotateRight'
+
+  _sendMessage: (action) =>
+    return debug "received '#{action}' but no device on scope" if _.isEmpty @device
+
+    debug 'emitting message with action', action
     @emit 'message', {
       devices: ['*']
-      data: {
-        action: 'click'
-        @device
-      }
+      data: { action, @device }
     }
 
 module.exports = Connector
