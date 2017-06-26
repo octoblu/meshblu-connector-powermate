@@ -28,10 +28,12 @@ class Connector extends EventEmitter
     callback null, running: @powermate.isConnected()
 
   onConfig: (@device={}, callback=->) =>
+    @powermate.config { rotationThreshold: _.get(@device, 'options.rotationThreshold') }
     callback null
 
-  start: (@device, callback) =>
-    debug 'started'
+  start: (device, callback) =>
+    debug '->start'
+    @onConfig device
     async.doUntil @_connectAndDelay, @_isClosed, @die
     callback()
 

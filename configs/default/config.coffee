@@ -5,4 +5,7 @@ module.exports =
     options:
       title: "Options"
       type: "object"
-      properties: {}
+      properties:
+        rotationThreshold:
+          title: 'Rotation Threshold'
+          type: 'integer'

@@ -142,7 +142,7 @@ describe 'Powermate', ->
       @HID.devices.returns [{path: '/path/to/powermate'}]
       @sut.connect done
 
-    describe 'when a non button event is emitted', ->
+    describe 'when a non-button event is emitted', ->
       beforeEach ->
         @onClicked = sinon.spy()
         @sut.on 'clicked', @onClicked
@@ -190,3 +190,139 @@ describe 'Powermate', ->
           expect(@onClicked).to.have.been.calledOnce
           done()
         , 100
+
+    describe 'when a configured to rotate on 2 events', ->
+      beforeEach ->
+        @sut.config rotationThreshold: 2
+        @onRotateLeft = sinon.spy()
+        @sut.on 'rotateLeft', @onRotateLeft
+
+      describe 'when one rotate event is emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should not emit a "rotateLeft" event', (done) ->
+          _.delay =>
+            expect(@onRotateLeft).not.to.have.been.called
+            done()
+          , 100
+
+      describe 'when two rotate event are emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should emit a "rotateLeft" event', (done) ->
+          _.delay =>
+            expect(@onRotateLeft).to.have.been.called
+            done()
+          , 100
+
+      describe 'when three rotate event are emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should emit exactly one "rotateLeft" event', (done) ->
+          _.delay =>
+            expect(@onRotateLeft).to.have.been.calledOnce
+            done()
+          , 100
+
+    describe 'when a configured to rotate on 3 events', ->
+      beforeEach ->
+        @sut.config rotationThreshold: 3
+        @onRotateLeft = sinon.spy()
+        @sut.on 'rotateLeft', @onRotateLeft
+
+      describe 'when two rotate event are emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should not emit a "rotateLeft" event', (done) ->
+          _.delay =>
+            expect(@onRotateLeft).not.to.have.been.called
+            done()
+          , 100
+
+      describe 'when three rotate event are emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should emit a "rotateLeft" event', (done) ->
+          _.delay =>
+            expect(@onRotateLeft).to.have.been.calledOnce
+            done()
+          , 100
+
+    describe 'when a configured to rotate on 2 events', ->
+      beforeEach ->
+        @sut.config rotationThreshold: 2
+        @onRotateRight = sinon.spy()
+        @sut.on 'rotateRight', @onRotateRight
+
+      describe 'when one rotate event is emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should not emit a "rotateRight" event', (done) ->
+          _.delay =>
+            expect(@onRotateRight).not.to.have.been.called
+            done()
+          , 100
+
+      describe 'when two rotate event are emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should emit a "rotateRight" event', (done) ->
+          _.delay =>
+            expect(@onRotateRight).to.have.been.called
+            done()
+          , 100
+
+      describe 'when three rotate event are emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should emit exactly one "rotateRight" event', (done) ->
+          _.delay =>
+            expect(@onRotateRight).to.have.been.calledOnce
+            done()
+          , 100
+
+    describe 'when a configured to rotate on 3 events', ->
+      beforeEach ->
+        @sut.config rotationThreshold: 3
+        @onRotateRight = sinon.spy()
+        @sut.on 'rotateRight', @onRotateRight
+
+      describe 'when two rotate event are emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should not emit a "rotateRight" event', (done) ->
+          _.delay =>
+            expect(@onRotateRight).not.to.have.been.called
+            done()
+          , 100
+
+      describe 'when three rotate event are emitted', ->
+        beforeEach ->
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+          @hid.emit 'data', [0x00, 0x01, 0x00, 0x00, 0x00, 0x00]
+
+        it 'should emit a "rotateRight" event', (done) ->
+          _.delay =>
+            expect(@onRotateRight).to.have.been.calledOnce
+            done()
+          , 100

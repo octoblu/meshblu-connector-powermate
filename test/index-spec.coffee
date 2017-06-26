@@ -10,6 +10,7 @@ describe 'Connector', ->
       close: sinon.spy()
       isConnected: sinon.stub()
       on: sinon.stub()
+      config: sinon.spy()
     @sut = new Connector { @powermate, interval: 10 }
 
   it 'should listen on powermate error', ->
@@ -23,13 +24,16 @@ describe 'Connector', ->
       beforeEach (done) ->
         @sut.die = sinon.stub()
         @powermate.connect.yields null
-        @sut.start { uuid: true }, (@error) =>
+        @sut.start { uuid: true, options: { rotationThreshold: 3 } }, (@error) =>
           @sut.close (error) =>
             return done error if error?
             _.delay done, 100
 
       it 'should start without an error', ->
         expect(@error).to.not.exist
+
+      it 'should call powermate config with the configuration', ->
+        expect(@powermate.config).to.have.been.calledWith { rotationThreshold: 3 }
 
       it 'should call powermate connect', ->
         expect(@powermate.connect).to.have.been.called
@@ -64,14 +68,14 @@ describe 'Connector', ->
 
   describe '->onConfig', ->
     describe 'when called with an object', ->
-      it 'should not throw an error', ->
-        expect(=>
-          @sut.onConfig { uuid: true }
-        ).to.not.throw
+      beforeEach 'call onConfig', ->
+        @sut.onConfig { uuid: 'yeso', options: {rotationThreshold: 9 } }
 
       it 'should set the device on the sut', ->
-        @sut.onConfig { uuid: 'yeso' }
-        expect(@sut.device).to.deep.equal { uuid: 'yeso' }
+        expect(@sut.device).to.deep.equal { uuid: 'yeso', options: { rotationThreshold: 9 } }
+
+      it 'should call powermate config with the configuration', ->
+        expect(@powermate.config).to.have.been.calledWith { rotationThreshold: 9 }
 
     describe 'when called without an object', ->
       it 'should throw an error', ->

@@ -5,7 +5,9 @@ debug          = require('debug')('meshblu-connector-powermate:powermate')
 class Powermate extends EventEmitter
   constructor: ({ @HID }={}) ->
     @HID ?= require 'node-hid'
-    @_throttledOnData = _.throttle @_onData, 500, leading: true, trailing: false
+    @_emitClicked = _.throttle @_unthrottledEmitClicked, 500, leading: true, trailing: false
+    @_emitRotateLeft = _.noop
+    @_emitRotateRight = _.noop
 
   connect: (callback) =>
     return callback null if @device?
@@ -16,7 +18,7 @@ class Powermate extends EventEmitter
       return callback @_createError 412, 'More than one Powermate device found'
     { path } = _.first(devices)
     @device = new @HID.HID path
-    @device.on 'data', @_throttledOnData
+    @device.on 'data', @_onData
     @device.once 'error', (error) =>
       @_emitError error
       @close()
@@ -29,26 +31,17 @@ class Powermate extends EventEmitter
     @device.removeAllListeners()
     @device = null
 
+  config: ({ @rotationThreshold }) =>
+    @_emitRotateLeft = _.after @rotationThreshold, @_unthrottledEmitRotateLeft
+    @_emitRotateRight = _.after @rotationThreshold, @_unthrottledEmitRotateRight
+
   isConnected: =>
     return @device?
 
-  _onData: (data) =>
-    debug '_onData', data
-    @_emitClicked() if data[0] || (0x00 == data[1])
-    @_emitRotateLeft() if data[1] == 0xff
-    @_emitRotateRight() if data[1] == 0x01
-
-  _emitClicked: =>
-    debug 'clicked'
-    @emit 'clicked'
-
-  _emitRotateLeft: =>
-    debug 'rotateLeft'
-    @emit 'rotateLeft'
-
-  _emitRotateRight: =>
-    debug 'rotateRight'
-    @emit 'rotateRight'
+  _createError: (code, message) =>
+    error = new Error message
+    error.code = code
+    return error
 
   _emitError: (error) =>
     return unless @isConnected()
@@ -57,9 +50,24 @@ class Powermate extends EventEmitter
     @emit 'error', error
     @close()
 
-  _createError: (code, message) =>
-    error = new Error message
-    error.code = code
-    return error
+  _onData: (data) =>
+    debug '_onData', data
+    @_emitClicked() if data[0] || (0x00 == data[1])
+    @_emitRotateLeft() if data[1] == 0xff
+    @_emitRotateRight() if data[1] == 0x01
+
+  _unthrottledEmitClicked: =>
+    debug 'clicked'
+    @emit 'clicked'
+
+  _unthrottledEmitRotateLeft: =>
+    @_emitRotateLeft = _.after @rotationThreshold, @_unthrottledEmitRotateLeft
+    debug 'rotateLeft'
+    @emit 'rotateLeft'
+
+  _unthrottledEmitRotateRight: =>
+    @_emitRotateRight = _.after @rotationThreshold, @_unthrottledEmitRotateRight
+    debug 'rotateRight'
+    @emit 'rotateRight'
 
 module.exports = Powermate
