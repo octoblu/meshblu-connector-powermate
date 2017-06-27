@@ -34,6 +34,7 @@ matrix:
             && meshblu-connector-pkger \
             && meshblu-connector-installer-debian \
             && meshblu-connector-uploader-github \
+            && upload-deb-s3 \
           '
   - os: linux
     dist: trusty
@@ -54,6 +55,7 @@ matrix:
             && meshblu-connector-pkger \
             && meshblu-connector-installer-debian \
             && meshblu-connector-uploader-github \
+            && upload-deb-s3 \
           '
   - os: linux
     dist: trusty
@@ -74,6 +76,7 @@ matrix:
             && meshblu-connector-pkger \
             && meshblu-connector-installer-debian \
             && meshblu-connector-uploader-github \
+            && upload-deb-s3 \
           '
   - os: osx
     node_js: "8"
