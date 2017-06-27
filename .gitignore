@@ -45,3 +45,4 @@ lib
 bin
 dockcross-node
 pkg-config.json
+data.json

@@ -142,7 +142,7 @@ describe 'Connector', ->
 
             it 'should emit a rotateLeft message on the websocket', (done) ->
               _.delay =>
-                expect(@onMessage).to.have.been.called
+                expect(@onMessage).to.have.been.calledWith '{"data":{"action":"rotateLeft"}}'
                 done()
               , 100
 

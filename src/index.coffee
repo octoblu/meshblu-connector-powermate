@@ -30,9 +30,12 @@ class Connector extends EventEmitter
     callback null, running: @powermate.isConnected()
 
   onConfig: (@device={}, callback=->) =>
-    @powermate.config { rotationThreshold: _.get(@device, 'options.rotationThreshold') }
+    options = _.get(@device, 'options', {})
+
+    debug 'onConfig', options
+    @powermate.config { rotationThreshold: options.rotationThreshold }
     @_restartWebsockets()
-    return callback null unless _.get(@device, 'options.websocketEnable')
+    return callback null unless options.websocketEnable
 
   start: (device, callback) =>
     debug '->start'
@@ -80,10 +83,11 @@ class Connector extends EventEmitter
 
     @wss.clients.forEach (client) ->
       return unless client.readyState == WebSocket.OPEN
-      client.send 'message', { data: { action } }
+      client.send JSON.stringify { data: { action } }
 
   _startWebsockets: =>
     { websocketEnable, websocketPort } = _.get @device, 'options', {}
+    debug '_startWebsockets', { websocketEnable, websocketPort }
     return @wss = { close: -> } unless websocketEnable && websocketPort?
     @wss = new WebSocket.Server { port: websocketPort }
 
