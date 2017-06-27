@@ -145,10 +145,10 @@ describe 'Powermate', ->
     describe 'when a non-button event is emitted', ->
       beforeEach ->
         @onClicked = sinon.spy()
-        @sut.on 'clicked', @onClicked
+        @sut.on 'click', @onClicked
         @hid.emit 'data', [0x00, 0xff, 0x00, 0x00, 0x00, 0x00]
 
-      it 'should not emit a "clicked" event', (done) ->
+      it 'should not emit a "click" event', (done) ->
         _.delay =>
           expect(@onClicked).not.to.have.been.called
           done()
@@ -157,10 +157,10 @@ describe 'Powermate', ->
     describe 'when a button event is emitted', ->
       beforeEach ->
         @onClicked = sinon.spy()
-        @sut.on 'clicked', @onClicked
+        @sut.on 'click', @onClicked
         @hid.emit 'data', [0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
 
-      it 'should emit a "clicked" event', (done) ->
+      it 'should emit a "click" event', (done) ->
         _.delay =>
           expect(@onClicked).to.have.been.called
           done()
@@ -169,10 +169,10 @@ describe 'Powermate', ->
     describe 'when a defective button click event is emitted', ->
       beforeEach ->
         @onClicked = sinon.spy()
-        @sut.on 'clicked', @onClicked
+        @sut.on 'click', @onClicked
         @hid.emit 'data', [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
 
-      it 'should emit a "clicked" event', (done) ->
+      it 'should emit a "click" event', (done) ->
         _.delay =>
           expect(@onClicked).to.have.been.called
           done()
@@ -181,11 +181,11 @@ describe 'Powermate', ->
     describe 'when a button event is emitted twice', ->
       beforeEach ->
         @onClicked = sinon.spy()
-        @sut.on 'clicked', @onClicked
+        @sut.on 'click', @onClicked
         @hid.emit 'data', [0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
         @hid.emit 'data', [0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
 
-      it 'should emit only one "clicked" event', (done) ->
+      it 'should emit only one "click" event', (done) ->
         _.delay =>
           expect(@onClicked).to.have.been.calledOnce
           done()

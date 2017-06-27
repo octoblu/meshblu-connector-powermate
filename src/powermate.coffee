@@ -5,7 +5,7 @@ debug          = require('debug')('meshblu-connector-powermate:powermate')
 class Powermate extends EventEmitter
   constructor: ({ @HID }={}) ->
     @HID ?= require 'node-hid'
-    @_emitClicked = _.throttle @_unthrottledEmitClicked, 500, leading: true, trailing: false
+    @_emitClick = _.throttle @_unthrottledEmitClick, 500, leading: true, trailing: false
     @_emitRotateLeft = _.noop
     @_emitRotateRight = _.noop
 
@@ -52,13 +52,13 @@ class Powermate extends EventEmitter
 
   _onData: (data) =>
     debug '_onData', data
-    @_emitClicked() if data[0] || (0x00 == data[1])
+    @_emitClick() if data[0] || (0x00 == data[1])
     @_emitRotateLeft() if data[1] == 0xff
     @_emitRotateRight() if data[1] == 0x01
 
-  _unthrottledEmitClicked: =>
-    debug 'clicked'
-    @emit 'clicked'
+  _unthrottledEmitClick: =>
+    debug 'click'
+    @emit 'click'
 
   _unthrottledEmitRotateLeft: =>
     @_emitRotateLeft = _.after @rotationThreshold, @_unthrottledEmitRotateLeft

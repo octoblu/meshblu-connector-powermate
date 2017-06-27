@@ -1,23 +1,44 @@
-{describe,beforeEach,it,expect} = global
+{afterEach, beforeEach, describe, it } = global
+{ expect } = require 'chai'
+{ EventEmitter } = require 'events'
 _         = require 'lodash'
 sinon     = require 'sinon'
+Websocket = require 'ws'
 Connector = require '../src/'
 
 describe 'Connector', ->
-  beforeEach ->
-    @powermate =
-      connect: sinon.stub()
-      close: sinon.spy()
-      isConnected: sinon.stub()
-      on: sinon.stub()
-      config: sinon.spy()
+  beforeEach (done) ->
+    @powermate = new EventEmitter
+    @powermate.connect = sinon.stub()
+    @powermate.close = sinon.spy()
+    @powermate.isConnected = sinon.stub()
+    @powermate.config = sinon.spy()
     @sut = new Connector { @powermate, interval: 10 }
+    @sut.start uuid: 'device-uuid', done
 
-  it 'should listen on powermate error', ->
-    expect(@powermate.on).to.have.been.calledWith 'error'
+  describe 'powermate "error"', ->
+    beforeEach ->
+      @onError = sinon.spy()
+      @sut.on 'error', @onError
+      @powermate.emit 'error', new Error('whoops')
 
-  it 'should listen on powermate clicked', ->
-    expect(@powermate.on).to.have.been.calledWith 'clicked'
+    it 'should proxy the powermate error', ->
+      expect(@onError).to.have.been.called
+
+  describe 'powermate "click"', ->
+    beforeEach ->
+      @onMessage = sinon.spy()
+      @sut.on 'message', @onMessage
+      @powermate.emit 'click'
+
+    it 'should send a click message', ->
+      expect(@onMessage).to.have.been.calledWith({
+        devices: ['*']
+        data:
+          action: 'click'
+          device:
+            uuid: 'device-uuid'
+      })
 
   describe '->start', ->
     describe 'when it starts and closes', ->
@@ -69,7 +90,7 @@ describe 'Connector', ->
   describe '->onConfig', ->
     describe 'when called with an object', ->
       beforeEach 'call onConfig', ->
-        @sut.onConfig { uuid: 'yeso', options: {rotationThreshold: 9 } }
+        @sut.onConfig { uuid: 'yeso', options: { rotationThreshold: 9 } }
 
       it 'should set the device on the sut', ->
         expect(@sut.device).to.deep.equal { uuid: 'yeso', options: { rotationThreshold: 9 } }
@@ -82,6 +103,69 @@ describe 'Connector', ->
         expect(=>
           @sut.onConfig()
         ).to.not.throw
+
+    describe 'when started', ->
+      beforeEach 'start', (done) ->
+        @sut.start {}, done
+
+      afterEach 'close', (done) ->
+        @sut.close done
+
+      describe 'when called with websocketEnable: true and websocketPort: 23000', ->
+        beforeEach 'call onConfig', ->
+          @sut.onConfig {
+            uuid: 'yeso',
+            options: {
+              websocketEnable: true
+              websocketPort: 23000
+            }
+          }
+
+        it 'should create a websocket server', (done) ->
+          ws = new Websocket "ws://localhost:23000"
+          ws.on 'open', ->
+            ws.close()
+            done()
+
+        describe 'with a websocket connection', ->
+          beforeEach 'connect websocket', (done) ->
+            @ws = new Websocket "ws://localhost:23000"
+            @ws.on 'open', done
+
+          describe 'when a rotateLeft event is emitted', ->
+            beforeEach ->
+              @onMessage = sinon.spy()
+              @ws.on 'message', @onMessage
+              @powermate.emit 'rotateLeft'
+
+            it 'should emit a rotateLeft message on the websocket', (done) ->
+              _.delay =>
+                expect(@onMessage).to.have.been.called
+                done()
+              , 100
+
+      describe 'when called with websocketEnable: true and websocketPort: 23000...twice', ->
+        beforeEach 'call onConfig', ->
+          @sut.onConfig {
+            uuid: 'yeso',
+            options: {
+              websocketEnable: true
+              websocketPort: 23000
+            }
+          }
+          @sut.onConfig {
+            uuid: 'yeso',
+            options: {
+              websocketEnable: true
+              websocketPort: 23000
+            }
+          }
+
+        it 'should create a websocket server', (done) ->
+          ws = new Websocket "ws://localhost:23000"
+          ws.on 'open', ->
+            ws.close()
+            done()
 
   describe '->isOnline', ->
     describe 'when connected', ->
@@ -135,12 +219,12 @@ describe 'Connector', ->
         expect(@error).to.exist
         expect(@error.message).to.equal 'oh-no'
 
-  describe '->_onClicked', ->
+  describe '->_onClick', ->
     describe 'when called with a device on the sut', ->
       beforeEach (done) ->
         @sut.device = { uuid: 'should-be-this' }
         @sut.on 'message', (@message) => done()
-        @sut._onClicked()
+        @sut._onClick()
 
       it 'should emit a message', ->
         expect(@message).to.deep.equal {
@@ -155,7 +239,7 @@ describe 'Connector', ->
         done = _.once done
         @sut.device = null
         @sut.on 'message', (@message) => done()
-        @sut._onClicked()
+        @sut._onClick()
         _.delay done, 500
 
       it 'should not emit a message', ->
