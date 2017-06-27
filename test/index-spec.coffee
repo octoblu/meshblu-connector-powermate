@@ -129,8 +129,10 @@ describe 'Connector', ->
 
         describe 'with a websocket connection', ->
           beforeEach 'connect websocket', (done) ->
+            @wsOnClose = sinon.spy()
             @ws = new Websocket "ws://localhost:23000"
             @ws.on 'open', done
+            @ws.on 'close', @wsOnClose
 
           describe 'when a rotateLeft event is emitted', ->
             beforeEach ->
@@ -141,6 +143,22 @@ describe 'Connector', ->
             it 'should emit a rotateLeft message on the websocket', (done) ->
               _.delay =>
                 expect(@onMessage).to.have.been.called
+                done()
+              , 100
+
+          describe 'when config is called with websocketEnable: false', ->
+            beforeEach ->
+              @sut.onConfig {
+                uuid: 'yeso',
+                options: {
+                  websocketEnable: false
+                  websocketPort: 23000
+                }
+              }
+
+            it 'should close the websocket connection', (done) ->
+              _.delay =>
+                expect(@wsOnClose).to.have.been.called
                 done()
               , 100
 
