@@ -5,6 +5,9 @@ env:
   global:
   - secure: h2f1cQXkrQKmlhZBwZSpgQxYoQc/m8V2Gmuj1UVmW0Naw3AbRdJyoZo7bKRNt/16n4Y44QMEZjf9rk2nhdFX98vV/eW3s/anb2ngsVg/6H9Hc3W2LOye3AuY6TjjviVruOI8yfVwkTfnrtSdaqKBI4msrq/Wxcczah6qg6mQ/VG46DAvQwaB87WgH69tcL++7Lr/B70yPNzNqlHXwLmy4rOEHEs+6FUBpmHifjOT0m9CMFyExDEoORcLbAYl4l8z9Ibl8diWEAHfkZj5htm666dW8pwVULfSC+8mSLKkgmvOmDFNJs62lIn+XNjx74W1vlCdx5lYVhQraVqtxuS9rtGXAUqxp98dCeFyeiLjmyLHFw0PI4LYJwwA1N13i68Eh3IX8KW+7FW8zIcLa5Bq/eXlXPgNgM7Zx0G1LZzX7HoFgHAUYY1OBFAb3nOG9OM/Y+6ut2tcDNE6P6aj0TR8ilBgFTSqrFAmEgUt56DxAcA4zZiZswI382H0RP+09+JXJ+TJlQ7up87S2OdWHeHIeWJbbltfMkxp7sVJFTmAfSHAY4r7T3yLlIIemghtyyITEiK6MUyrYzorlzyrjG3Mu9kVd/wQZvjwVFyXQxLqeISlOeXKQBbWxwwHoVybMSxN7bzpQuSbriQLAT7Jrii/WPqsvDnCiax5k3p8MRitbKI=
   - secure: O0jP69044n0kT8eZEQZhy7UF1u1AV6wS87L10NOap0cT3wUHq2Bn86/WXLA6abkNyN40U6ixFNNH1oG9+fPy2los/ZBG+V+zVxaxIYTJxyKNmRXRJKncUdkSRsbCQxxOP3T33MgXDwznVarbaEbWxOzAi9qSFy3bXj9x3G/okT63b0IrRKoid7Epp8zPIMxWJemh+2eL+63KdYfS52s3XHOIV3QjEg1Lf2S4v68njsqzYsU3TOPa8gTeOTUqYzszVLeTb5WYvZs46lXa+YwSct5X0UcFkQwFc0Vvod0TEVBMx9Luk0t5ZxiyrpsrISPasDlaJZlU4FemOtdUcv/Idk4IpNx4OK31c4uH5oHj7AigHwlLePU3MayOH1/1bJWVRf5dzgRgxW1dYJbUEGPIaVRjxjjh2EuQVPLgEOVJUNldVXsPU9kZTIg2iB4CAy4kV2N09C3eWBQA7zgI458bUPLrpm8jEvDRndP6U2qPHQdrjL6d3wgQ3xJSKsI9bJ2AFij5ILm7PAJbOAPIqSteUMW9zW2CvHcG+p9Wciq6Ft/IQCxV2Dv7Ppo7TJd3pHuBf8Dmk9x4A6RLwjp1u7y2LacmOSBru7Ve0Nx4IRSRbNL3N/tqRTanUuErGZR5CxNHpSDtfWLJq40LDe/cKALRhK3tDD4GJ0dCu95ptm5vEhE=
+  - secure: w7aHtSLIfPo9Foh+FQpmpRs5gOPUoVFEKlZXYO9BGQyl5SopREHCIuVsis7VOLUaLOv7w1pj0ylNe7J/GYtVe8ySyG1BoXF5hK+jg/pJmkggJ7I4PE9qinarMmzmS8Nl+iGblLJEfAwXDQO4g/dYtHzZlK/PdEjdfz7JGCeq1CMYh6gE1/EY4kSZt0fx58rSXqDHWR4E4H9a41Zo6fmU/MJ9KHkXKvWlP6+xcPqdk3vxwCOgWWweB6daXTcXpXCI/kMBgZzsbr8gKql6+iL1pPL+B3OtXA9g8CGva8JFxEhxT3D63PIck5ZZNBDqbEXeNLj/cQmdnzteTOl05K/ji/Ob1k9oTVE1HpiSDj+Pdf2RxdEaR4At3DqD4qr9YNvYe4q086PkfgLsJegQNRkG3/dd4HtUZ1tzY4gUfU9eGx0IW/xrRNL1pNeKZvrpAWaDpkzyuebp7G1RsIBZ7aQ8KX+uIqHrFH1TcP9Hli0sc7UUWV35psckm2QNMTbXwqwSN4Jz+d4unXpC0QHlX6cwh8NJlflFjrX1VKXPb5o9EqidxrA80+NMPXMmboDVUoSvSt9XOkltZpaQkNqNVLgxzvcd/PHoLBYk3kNeI2rTUiC7kshiZu/Qk3xHUHX4ldsP9cxt7+01SmPiaSq3GCQMnfY9v4CBwcDd+2O0iCLtlpk=
+  - secure: Ip06aoj8EKE6VIWO60mpAtgGImb9qTlELme/x0kN9YH0MRnjzruhQd8sg+ae2rcQXQRVbFol+68RnINdMYUtQvLAyL9rQopYNFn7IrWbZsE+//OdQCNs3J0zu3sTLr9ZAKcVyvOPoDo8zPYgTMAJ/kNkCmbRRpDporrcQYCmzA/fk2r/D/xpdSz0QpjscNkZdEdN+NQbLAyJEeP9hA3t+twhmpiFZQAEH19cS+HZ4DxQebo4xr2vG7UhQHCAWUXVGsI4HEFEgBCR9+l5577tkrVbKSg0KoUydjTtXWxe5EIpEx146nFSb6oKFrDwirOZgE+bN4kRJmcLC2TjExIvkTp0j1vDy5ni4fmCGwR2hOlz9nOed8LEaA/yQw+HIsdjZ/mjSrOwH5iEpA0+wkZ1IuMH3QrP/h0PI2OgysBM4yXpngDar0MrkK4ahnscuizUc2h9aK5OvaYfdPNZie1tRpW3XwVwvkfWswVB5oT3IHrE1/36hpCSHwWiqycM+k18SRoZNpDeVWFXi/iSmYHFLN+YF+qovAeQ1+0goH//iJT1jUMgI1TJXH2BjdLwLDr6zOZo1sp+hVr52bWmYda//cNhyHad3LlrLRO4lq1fAXP9ryOSNutwh3gKodMqq/5YUOdVSVHw73V7vdo8JJaOfxk+FkBdzsv5A/zUKir9OGM=
+  - secure: Ze0sAhgx/gt1rn0ZpVoN9FPTx1wr3lcv6a3BdLvRMi34VJKo7EIjF73xfcmZc6duvFKx4AOHVV5I3am7Ylg+JTNmh0yc2skuzYVOm6VFFatL7ID2ZXm4zmHFR5cDiO05AOZGkUiMeKDpe2lLHB26DCuRbReGC3jGmTcfPjs69ZVO9foMI4saARmGl9OD8W79J7URUJSW3Hq9MRlewCWoPvzLLJl8UA9vdAk+si9aS2coKbD1fMMH+jBgeBv89FogGWQSaGVikNtsZR7X+fqSweEHw6x77UI6Mc/xLmGzjg4X1J42N7gVmPD8N4EwnOVu94t9fl6RK6aaQAn4VOK7GDAC/TdV6vkkveMCX4GgM9IM94fkYUJ4+x7BL2rKUjxIgMM/am/HJN4EDID0/EMBUe2xbExkwq/UJjp/GbBoPSuvKJS+XKhocDaYScigBDnro/PKYJyZ3Ky0L+Nu/exNuEDnOv3EO4pec+rlTfMCYzpjK9nrzn22gnUtqNhjY1fZBWIKIJUv62WE3IG7KzF3OMD/kfEdkaEO/76wMEWKOSjxzngTu65g60PKpDPw+xlJPX7t9md5eoY/Va1yY3e14CbKHcCwbZMnj2okimcUXqhXpVLR/eTtfoLYcn0r0DYm6B0DM3v06wGZ2c33x8fT6LSkjMtgFqTjerh23THiUAY=
 matrix:
   fast_finish: true
   include:
@@ -12,10 +15,10 @@ matrix:
     language: node_js
     node_js: '8'
     after_success:
-      - yarn global add meshblu-connector-schema-generator meshblu-connector-uploader-github
-      - mkdir -p ./deploy/assets
-      - meshblu-connector-schema-generator > ./deploy/assets/schemas.json
-      - meshblu-connector-uploader-github --installers-path ./deploy/assets
+    - yarn global add meshblu-connector-schema-generator meshblu-connector-uploader-github
+    - mkdir -p ./deploy/assets
+    - meshblu-connector-schema-generator > ./deploy/assets/schemas.json
+    - meshblu-connector-uploader-github --installers-path ./deploy/assets
   - os: linux
     dist: trusty
     language: shell
@@ -80,7 +83,7 @@ matrix:
             && upload-deb-s3 \
           '
   - os: osx
-    node_js: "8"
+    node_js: '8'
     language: node_js
     after_success:
     - yarn global add meshblu-connector-pkger meshblu-connector-installer-macos meshblu-connector-uploader-github
